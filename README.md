@@ -14,7 +14,7 @@ R> install_github("m-vidal/pfica")
 ```
 ___
 
-This is a version in development of `pfica` Package. See also [`fda` package](https://cran.r-project.org/web/packages/fda/fda.pdf) (J. O. Ramsay, Hadley Wickham, Spencer.
+This is a version in development of `pfica` package; see also [`fda`](https://cran.r-project.org/web/packages/fda/fda.pdf) package (J. O. Ramsay, Hadley Wickham, Spencer.
 
 ## References
 Vidal, M. (2020). “Functional Independent Component Analysis in Bioelectrical Signal Processing”. MA thesis. Universidad de Granada.

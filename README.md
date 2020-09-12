@@ -20,5 +20,4 @@ This is a version in development of `pfica` Package.
 Vidal, M. (2020). “Functional Independent Component Analysis in Bioelectrical Signal Processing”. MA thesis. Universidad de Granada.
 
 ## Authors
- M. Vidal <marc.vidalbadia@ugent.be>
- AM. Aguilera
+ M. Vidal <<marc.vidalbadia@ugent.be>>, AM. Aguilera.

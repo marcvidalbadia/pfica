@@ -1,0 +1,15 @@
+Package: pfica
+Version: 0.1.0
+Title: Penalized Independent Component Analysis for Univariate Functional Data
+Author: Marc Vidal Badia, Ana Mª Aguilera del Pino
+Maintainer: Marc Vidal Badia <marc.vidalbadia@ugent.be>
+Description: Performs penalized independent component analysis for univariate functional data. Two alternative models are implemented, both based on the fourth order blind identification method.  
+License: GPL (>= 2)
+Depends: 
+    R (>= 2.10), fda
+Imports: moments
+Encoding: UTF-8
+LazyData: true
+NeedsCompilation: no
+Repository: CRAN
+RoxygenNote: 7.1.1

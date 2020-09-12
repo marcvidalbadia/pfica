@@ -1,6 +1,6 @@
 # pfica: Penalized Independent Component Analysis for Functional Data
 ## Install the Package
-Before downloading it `pfica`, you should have installed `devtools` and load it:
+Before downloading `pfica`, you should have installed `devtools` and load it:
 
 ```R
 R> install.packages("devtools")

@@ -7,7 +7,7 @@ R> install.packages("devtools")
 R> library("devtools")
 ```
 
-After that, to download the package, you can type in the **R** prompt:
+After that, to install the package, you can type in the **R** prompt:
 
 ```R
 R> install_github("m-vidal/pfica")

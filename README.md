@@ -16,6 +16,9 @@ ___
 
 This is a version in development of `pfica` Package. 
 
-`pfica` was created as a result of the master thesis:  
+## References
 Vidal, M. (2020). “Functional Independent Component Analysis in Bioelectrical Signal Processing”. MA thesis. Universidad de Granada.
-supervised by AM. Aguilera and M. Escabias.
+
+## Authors
+ M. Vidal <marc.vidalbadia@ugent.be>
+ AM. Aguilera

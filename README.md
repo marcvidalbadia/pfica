@@ -8,6 +8,6 @@ The development version of **pfica** can be installed from GitHub using:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("m-vidals/pfica")
+devtools::install_github("m-vidal/pfica")
 ```
 **ACKNOWLEDGMENTS. S.N** Daniel Gost

@@ -10,8 +10,8 @@ The development version of **pfica** can be installed from GitHub using:
 # install.packages("devtools")
 devtools::install_github("m-vidal/pfica")
 ```
-See the **pfica** [reference
-manual](https://cran.r-project.org/package=pfica/pfica.pdf) for more detailed information about the functions. 
+See the [reference
+manual](https://cran.r-project.org/package=pfica/pfica.pdf) for more detailed information about the **pfica** functions. 
 Use [**statfda**](http://www.statfda.com)!
 
 **ACKNOWLEDGMENTS. S.N** [Daniel Gost](https://danielgost.com) and PAIDI Research Group FQM-307 ([UGR](https://www.ugr.es)).

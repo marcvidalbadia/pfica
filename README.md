@@ -1,4 +1,4 @@
-pfica: Penalized Independent Component Analysis for Functional Data  <img src="man/figure/logo.png" align="right" />
+pfica: Penalized Independent Component Analysis for Functional Data  <img src="man/figures/logo.png" align="right" height="300"/>
 ====================================================
 
 ## Install the Package

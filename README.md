@@ -14,4 +14,4 @@ See the **pfica** [reference
 manual](https://cran.r-project.org/package=pfica/pfica.pdf) for more detailed information about the functions. 
 Use [**statfda**](http://www.statfda.com)!
 
-**ACKNOWLEDGMENTS. S.N** [Daniel Gost](https://danielgost.com) and PAIDI Research Group FQM-307, Modelization and Forecasting with Functional Data.
+**ACKNOWLEDGMENTS. S.N** [Daniel Gost](https://danielgost.com) and PAIDI Research Group FQM-307 ([UGR](https://www.ugr.es)).

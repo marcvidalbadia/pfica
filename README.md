@@ -10,4 +10,7 @@ The development version of **pfica** can be installed from GitHub using:
 # install.packages("devtools")
 devtools::install_github("m-vidal/pfica")
 ```
+**pfica** [reference
+manual](https://cran.r-project.org/package=pfica/pfica.pdf).
+
 **ACKNOWLEDGMENTS. S.N** Daniel Gost

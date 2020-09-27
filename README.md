@@ -10,7 +10,7 @@ The development version of **pfica** can be installed from GitHub using:
 # install.packages("devtools")
 devtools::install_github("m-vidal/pfica")
 ```
-**pfica** [reference
-manual](https://cran.r-project.org/package=pfica/pfica.pdf).
+See the **pfica** [reference
+manual](https://cran.r-project.org/package=pfica/pfica.pdf) for more information about the functions. For general FDA methods use [**statfda**](http://www.statfda.com)!
 
-**ACKNOWLEDGMENTS. S.N** Daniel Gost
+**ACKNOWLEDGMENTS. S.N** [Daniel Gost](https://danielgost.com) and PAIDI Research Group FQM-307, Modelization and Forecasting with Functional Data.

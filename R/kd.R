@@ -1,4 +1,4 @@
-kd <- function(fdx, hm = fdPar(fdx), rho = NULL, r = 2, centerfd = FALSE, qmin = 2, qmax = 5) {
+kd <- function(fdx, hm = fdPar(fdx), pp = NULL, r = 2, centerfd = FALSE, qmin = 2, qmax = 5) {
   if (!(inherits(fdx, "fd")))
     stop("Argument FD  not a functional data object; see fda package.")
   if (qmin <= 1)
@@ -7,9 +7,9 @@ kd <- function(fdx, hm = fdPar(fdx), rho = NULL, r = 2, centerfd = FALSE, qmin =
     stop("qmax is too large")
   K <- list()
   kurt.d <- numeric()
-  if (!is.null(rho)) {
+  if (!is.null(pp)) {
     for (i in qmin:qmax){
-    K[[i]] <- pspline.kffobi(fdx, i, rho, r, pr = "fdx.st", centerfd)$kurtosis}
+    K[[i]] <- pspline.kffobi(fdx, i, pp, r, pr = "fdx.st", centerfd)$kurtosis}
   } else {
     for (i in qmin:qmax){
     K[[i]] <- kffobi(fdx, i, hm, pr = "fdx.st", center = centerfd)$kurtosis

@@ -1,6 +1,6 @@
 kffobi <- function(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
                    pr = c("fdx", "fdx.st", "KL", "KL.st"),
-                   center = FALSE, plotfd = FALSE) {
+                   shrinkage = FALSE, center = FALSE, plotfd = FALSE) {
   if (!(inherits(fdx, "fd")))
     stop("Argument FD  not a functional data object; see fda package.")
   if (length(pr) != 1 & is.character(pr)) {
@@ -21,7 +21,10 @@ kffobi <- function(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
     L <- L + lambda * R
   }; L <- (L + t(L))/2
   W <- solve(chol(L))
-  cov <- tcrossprod(a)/ncol(a)
+  if (shrinkage == TRUE) {
+    cov <- corpcor::cov.shrink(t(a), verbose = F)
+  } else {
+    cov <- tcrossprod(a)/ncol(a) }
   J <- inprod(rphi, phi)
   rGram <- crossprod(W, J)
   C2 <- rGram %*% cov %*% t(rGram); C2  <- (C2 + t(C2))/2
@@ -36,8 +39,8 @@ kffobi <- function(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
   wz <- ds %*% t(svdz$u)
   zst <- z %*% wz
   nr <- sqrt(rowSums(zst^2))
-  zst <- nr * zst
-  C4 <- crossprod(zst)/(ncol(a) * (ncomp + 2))
+  z.st <- nr * zst
+  C4 <- crossprod(z.st)/(ncol(a) * (ncomp + 2))
   svdk <- La.svd(C4)
   eigenk  <- svdk$d
   v <- svdk$u
@@ -61,8 +64,8 @@ kffobi <- function(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
     oldpar <- par(mfrow=c(2,3), no.readonly = TRUE)
     on.exit(par(oldpar))
     for (j in 1:ncomp){
-      txt <- paste('EF-',j, "IC Kurt:", round(kurt[j],3))
-      plot(h[j], col="#6495ED", bty="n", main=txt)
+      plot(h[j])
+      title(paste('IC', j, "Kurt:", round(kurt[j],3)))
       par(ask=T)}; par(ask=F)}
   colnames(h$coefs) <- paste("eigenf.", c(1:ncomp), sep = "-")
   rownames(h$coefs) <- h$basis$names

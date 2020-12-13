@@ -4,6 +4,8 @@
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/pfica)](https://cran.r-project.org/package=pfica)
 [![Licence](https://img.shields.io/badge/licence-GPL--2-blue.svg)](https://www.gnu.org/licenses/gpl-2.0.en.html)
 
+News: **pfica** 0.1.1 beta has been released. 
+
 The development version of **pfica** can be installed from GitHub using:
 
 ``` r

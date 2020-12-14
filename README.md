@@ -4,7 +4,7 @@
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/pfica)](https://cran.r-project.org/package=pfica)
 [![Licence](https://img.shields.io/badge/licence-GPL--2-blue.svg)](https://www.gnu.org/licenses/gpl-2.0.en.html)
 
-News: **pfica** 0.1.1 beta has been released. 
+News: **pfica** 0.1.1 has been released. This version includes some corrections on main FICA fucntions. We also introduce shrinkage estimators adapted for larger dimension curve fitting.
 
 The development version of **pfica** can be installed from GitHub using:
 

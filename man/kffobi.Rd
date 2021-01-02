@@ -48,7 +48,7 @@ basis <- create.fourier.basis(rangeval=c(min(arg), max(arg)), nbasis=301, basisv
 x <- Data2fd(X, argvals=arg, basis)
 ## Penalization can be considered:
 #Lfdobj <- vec2Lfd(c(0,(2*pi/diff(4))^2,0), 4)
-#hm <- fdPar(base, Lfdobj, lambda=2)
+#hm <- fdPar(basis, Lfdobj, lambda=2)
 ## Select the number of components with the kurtosis distance:
 #kurt.dist <- kd(x, qmax = 8)
 aci <- kffobi(x, 7, plotfd = TRUE)

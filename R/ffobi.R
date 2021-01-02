@@ -3,14 +3,27 @@ ffobi <- function(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
                   shrinkage = FALSE, center = FALSE, plotfd = FALSE) {
   if (!(inherits(fdx, "fd")))
     stop("Argument FD  not a functional data object. See fda package")
-  if (length(pr) != 1 & is.character(pr)) {
+  if (length(pr) != 1 & is.character(pr))
     pr <- "fdx.st"
-  } else if (!is.character(pr)) {
-    stop("Select a functional data object to project")
-  }
-  if (center) {
-    fdx <- center.fd(fdx)}
-
+  else if (!is.character(pr)) stop("Select a functional 
+                                    data object to project")
+  if (center) fdx <- center.fd(fdx)
+  
+  a <- fdx$coefs 
+  phi <- fdx$basis
+  J <- inprod(phi, phi)
+  rGram1 <- chol(J)
+  W1 <- solve(rGram1)
+  
+  if (shrinkage == TRUE) covc <- corpcor::cov.shrink(t(a), verbose = F)
+  else covc <- crossprod(t(a))#/ncol(a)
+  
+  C2 <-  rGram1 %*% covc %*% t(rGram1)
+  C2 <- (C2 + t(C2))/2
+  dC2 <- La.svd(C2) 
+  wa <- dC2$u %*% tcrossprod(diag((1/dC2$d)^0.5), dC2$u)
+  asta <- W1 %*% wa %*% rGram1 %*% a
+  
   Lfdobj <- eigenfPar$Lfd
   lambda <- eigenfPar$lambda
   phi <- fdx$basis
@@ -20,42 +33,37 @@ ffobi <- function(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
     R <- eval.penalty(rphi, Lfdobj)
     L <- L + lambda * R
   }; L <- (L + t(L))/2
-  W <- solve(chol(L))
   J <- inprod(rphi, phi)
+  W <- solve(chol(L))
   rGram <- crossprod(W, J)
-
-  a <- fdx$coefs
-  if (shrinkage == TRUE) {
-    svda <- La.svd(corpcor::cov.shrink(t(a), verbose = F))
-  } else {
-    svda <- La.svd(tcrossprod(a)/ncol(a)) }
-  wa <-  (W %*% svda$u) %*% diag(c(1/sqrt(svda$d))) %*% t(W%*%svda$u)
-  wa <- sqrt(ncol(a)-1) * wa
-  asta <- wa %*% a
+  
   nr <- numeric()
-  for (i in 1:ncol(asta)) {
-    nr[i] <- (t(asta[,i])%*%rGram %*% (rGram%*%asta[,i]))}
-  ast <- nr * asta
-  kurt <- tcrossprod(ast)/(ncol(ast) * (ncomp + 2))
-  C4 <- rGram %*% kurt %*% t(rGram); C4  <- (C4 + t(C4))/2
-
+  for (i in 1:ncol(asta)) nr[i] <- (t(asta[,i]) %*% J %*% asta[,i]);
+  ast <- asta %*% diag(nr)
+  kurt <- tcrossprod(ast)#/(ncol(ast) * (ncomp + 2))
+  C4 <- rGram %*% kurt %*% t(rGram)
+  C4  <- (C4 + t(C4))/2
+  
+  #Alternative discretized version of the Kurtosis operator
+  #C4 <- rGram%*%asta%*%t(asta)%*%t(rGram)%*%rGram%*%asta%*%t(asta)%*%t(rGram)
+  #C4  <- (C4 + t(C4))/2
+  
   svdk <- La.svd(C4)
   u <- as.matrix(svdk$u[, 1:ncomp])
   b <- W %*% u
   h <- fd(b, rphi)
   svdk <- La.svd(C4)
-  u <- as.matrix(svdk$u[, 1:ncomp])
-  b <- W %*% u
   h <- fd(b, rphi)
   xst <- fd(asta, phi)
   project <- list(fdx, xst)
   names(project) <- c("fdx", "fdx.st")
   zi <- inprod(project[[paste(pr)]], h)
+  
   kurt <- vector()
   for (i in 1:ncomp) {
     K <- moments::kurtosis(zi[,i])
     kurt[i]=K}
-
+  
   if (plotfd) {
     oldpar <- par(mfrow=c(2,3), no.readonly = TRUE)
     on.exit(par(oldpar))
@@ -69,6 +77,3 @@ ffobi <- function(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
   names(FICA) <- c("eigenbasis", "kurtosis", "scores")
   return(FICA)
 }
-
-
-

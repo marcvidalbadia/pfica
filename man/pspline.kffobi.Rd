@@ -42,8 +42,9 @@ B <- create.bspline.basis(rangeval=c(min(arg),max(arg)), nbasis=16)
 x <- Data2fd(Temp, argvals = arg, B)
 ica.fd <- pspline.kffobi(x, 16, pp = 10)
 ## Plot by region: classification in order of maximum kurtosis
-k1 <- which.max(ica.fd$kurtosis)
-k2 <- which.max(ica.fd$kurtosis[c(-k1)])+1
+kurt <- ica.fd$kurtosis
+k1 <- which.max(kurt)
+k2 <- which(kurt==max(kurt[kurt!=max(kurt)]))
 sc <- ica.fd$scores
 plot(sc[,c(k1)], sc[,c(k2)], ylab = "", xlab = "")
 text(sc[,c(k1)], sc[,c(k2)], CanadianWeather$region, pch=0.5, cex=0.6)}

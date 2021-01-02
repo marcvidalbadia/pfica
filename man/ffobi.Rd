@@ -45,9 +45,11 @@ x <- Data2fd(Temp, argvals = arg, B)
 Lfdobj <- int2Lfd(max(0, norder(B)-2))
 penf <- fdPar(B, Lfdobj, lambda=10^4)
 ica.fd <- ffobi(x, 16, penf)
+
 ## Plot by region: classification in order of maximum kurtosis
-k1 <- which.max(ica.fd$kurtosis)
-k2 <- which.max(ica.fd$kurtosis[c(-k1)])+1
+kurt <- ica.fd$kurtosis
+k1 <- which.max(kurt)
+k2 <- which(kurt==max(kurt[kurt!=max(kurt)]))
 sc <- ica.fd$scores
 plot(sc[,c(k1)], sc[,c(k2)], ylab = "", xlab = "")
 text(sc[,c(k1)], sc[,c(k2)], CanadianWeather$region, pch=0.5, cex=0.6)

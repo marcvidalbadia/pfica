@@ -4,7 +4,7 @@
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/pfica)](https://cran.r-project.org/package=pfica)
 [![Licence](https://img.shields.io/badge/licence-GPL--2-blue.svg)](https://www.gnu.org/licenses/gpl-2.0.en.html)
 
-News: **pfica** 0.1.1-5 has been released. This version includes some corrections on main the **pfica** functions. We also introduce shrinkage estimators to conduct  FICA on functional data fitted with a larger basis dimension. 
+News: **pfica** 0.1.1-5 has been released. This version includes some corrections on main the **pfica** functions of the published version 0.1.1.
 
 The development version of **pfica** can be installed from GitHub using:
 

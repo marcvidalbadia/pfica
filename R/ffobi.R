@@ -16,7 +16,7 @@ ffobi <- function(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
   W1 <- solve(rGram1)
   
   if (shrinkage == TRUE) covc <- corpcor::cov.shrink(t(a), verbose = F)
-  else covc <- crossprod(t(a))#/ncol(a)
+  else covc <- tcrossprod(a)#/ncol(a)
   
   C2 <-  rGram1 %*% covc %*% t(rGram1)
   C2 <- (C2 + t(C2))/2

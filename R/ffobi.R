@@ -10,13 +10,14 @@ ffobi <- function(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
   if (center) fdx <- center.fd(fdx)
   
   a <- fdx$coefs 
+  nrep <- dim(a)[2]
   phi <- fdx$basis
   J <- inprod(phi, phi)
   rGram1 <- chol(J)
   W1 <- solve(rGram1)
   
   if (shrinkage == TRUE) covc <- corpcor::cov.shrink(t(a), verbose = F)
-  else covc <- tcrossprod(a)#/ncol(a)
+  else covc <- tcrossprod(a)/nrep
   
   C2 <-  rGram1 %*% covc %*% t(rGram1)
   C2 <- (C2 + t(C2))/2
@@ -40,7 +41,7 @@ ffobi <- function(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
   nr <- numeric()
   for (i in 1:ncol(asta)) nr[i] <- (t(asta[,i]) %*% J %*% asta[,i]);
   ast <- asta %*% diag(nr)
-  kurt <- tcrossprod(ast)#/(ncol(ast) * (ncomp + 2))
+  kurt <- tcrossprod(ast)/nrep
   C4 <- rGram %*% kurt %*% t(rGram)
   C4  <- (C4 + t(C4))/2
   
@@ -50,9 +51,8 @@ ffobi <- function(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
   
   svdk <- La.svd(C4)
   u <- as.matrix(svdk$u[, 1:ncomp])
+  eigv <- svdk$d[1:ncomp]
   b <- W %*% u
-  h <- fd(b, rphi)
-  svdk <- La.svd(C4)
   h <- fd(b, rphi)
   xst <- fd(asta, phi)
   project <- list(fdx, xst)
@@ -73,7 +73,7 @@ ffobi <- function(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
       par(ask=T)}; par(ask=F)}
   colnames(h$coefs) <- paste("eigenf.", c(1:ncomp), sep = "-")
   rownames(h$coefs) <- h$basis$names
-  FICA <- list(h, kurt, zi)
-  names(FICA) <- c("eigenbasis", "kurtosis", "scores")
+  FICA <- list(h, eigv, kurt, zi)
+  names(FICA) <- c("eigenbasis", "eigenvalues", "kurtosis", "scores")
   return(FICA)
 }

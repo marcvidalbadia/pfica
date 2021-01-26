@@ -27,7 +27,6 @@ ffobi <- function(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
   
   Lfdobj <- eigenfPar$Lfd
   lambda <- eigenfPar$lambda
-  phi <- fdx$basis
   rphi <- eigenfPar$fd$basis
   L <- eval.penalty(rphi, 0)
   if (lambda > 0) {

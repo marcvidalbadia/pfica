@@ -7,7 +7,8 @@ ffobi <- function(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
     pr <- "fdx.st"
   else if (!is.character(pr)) 
     stop("Select a functional data object to project")
-  if (center) fdx <- center.fd(fdx)
+  if (center) 
+    fdx <- center.fd(fdx);
   
   a <- fdx$coefs 
   nrep <- dim(a)[2]
@@ -16,8 +17,9 @@ ffobi <- function(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
   rGram1 <- chol(J)
   W1 <- solve(rGram1)
   
-  if (shrinkage == TRUE) covc <- corpcor::cov.shrink(t(a), verbose = F)
-  else covc <- tcrossprod(a)
+  if (shrinkage == TRUE) 
+    covc <- corpcor::cov.shrink(t(a), verbose = F)
+  else covc <- tcrossprod(a);
   
   C2 <-  rGram1 %*% covc %*% t(rGram1)
   C2 <- (C2 + t(C2))/2

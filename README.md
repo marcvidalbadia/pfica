@@ -6,7 +6,7 @@
 
   News: we are preparing **pfica** 0.1.2. This version will include some corrections on main the **pfica** functions of the published version 0.1.1.
 
-  # Installation of the current development version
+  ### Installation of the current development version
   The development version of **pfica** can be installed using:
 
   ``` r

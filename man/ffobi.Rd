@@ -2,7 +2,7 @@
 \alias{ffobi}
 \title{Smoothed functional ICA in terms of basis functions coordinates}
 \description{
-This function computes the ordinary ICA procedure from a sample represented by basis functions (Fourier, B-splines...). The estimation method is based on the use of fourth moments (FOBI), in which it is assumed that the independent components have different kurtosis values. The proposed algorithm can be considered an extension of the implementation of the kurtosis operator introduced in Peña et. al (2014), whose decomposition is used to identify cluster structures and outliers.}
+This function computes the ordinary ICA procedure from a sample represented by basis functions (Fourier, B-splines...). The estimation method is based on the use of fourth moments (kurtosis), in which it is assumed that the independent components have different kurtosis values. The proposed algorithm can be considered an extension of the implementation of the kurtosis operator introduced in Peña et. al (2014), whose decomposition is used to identify cluster structures and outliers.}
 \usage{
 ffobi(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
       pr = c("fdx", "fdx.st"), shrinkage = FALSE,
@@ -12,10 +12,10 @@ ffobi(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
   \item{fdx}{a functional data object obtained from the \strong{fda} package.}
   \item{ncomp}{number of independent components to compute.}
   \item{eigenfPar}{a functional parameter object, obtained from the \strong{fda} package, that defines the independent component functions to be estimated.}
-    \item{pr}{the functional data object to project  into the space spanned by the eigenfunctions of the FOBI operator.  To compute the independent components, the usual procedure is to use \code{fdx.st}, the standardized basis expansion. Thus, if \code{pr} is not supplied, \code{fdx.st} is used.}
+    \item{pr}{the functional data object to project  into the space spanned by the eigenfunctions of the kurtosis operator.  To compute the independent components, the usual procedure is to use \code{fdx.st}, the standardized basis expansion. Thus, if \code{pr} is not supplied, \code{fdx.st} is used.}
   \item{shrinkage}{uses shrinkage estimators to compute the covariance matrix of the coordinate vectors.}
   \item{center}{a logical value indicating whether the mean function has to be subtracted from each functional observation.}
-  \item{plotfd}{a logical value indicating whether to plot the eigenfunctions \cr of the FOBI operator.}
+  \item{plotfd}{a logical value indicating whether to plot the eigenfunctions \cr of the kurtosis operator.}
 }
 \details{This IC model for functional data consists in performing the multivariate ICA of a transformation of the coordinate vectors associated to a basis of functions. The algorithm also incorporates a continuous penalty in the orthonormality constraint.}
 \value{a list with the following named entries:

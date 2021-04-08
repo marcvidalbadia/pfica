@@ -5,6 +5,13 @@ ffobi <- function(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
     stop("Argument FD  not a functional data object. See fda package")
   if (length(pr) != 1 & is.character(pr))
     pr <- "fdx.st"
+  else if (!is.character(pr)) stop("Select a functional data object to project")
+  if (center) fdx <- center.fd(fdx)
+  
+  a <- fdx$coefs 
+  nrep <- ncol(a)
+  if (nrep < 2) 
+    stop("ICA not possible without replications.")
   else if (!is.character(pr)) 
     stop("Select a functional data object to project")
   if (center) 
@@ -13,19 +20,21 @@ ffobi <- function(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
   a <- fdx$coefs 
   nrep <- dim(a)[2]
   phi <- fdx$basis
-  J <- inprod(phi, phi)
-  rGram1 <- chol(J)
-  W1 <- solve(rGram1)
+  G <- inprod(phi, phi)
+  L1 <- chol(G)
+  W1 <- solve(L1)
   
+  if (shrinkage == TRUE) covc <- corpcor::cov.shrink(t(a), verbose = F)/nrep
+  else covc <- tcrossprod(a)/nrep
   if (shrinkage == TRUE) 
     covc <- corpcor::cov.shrink(t(a), verbose = F)
   else covc <- tcrossprod(a);
   
-  C2 <-  rGram1 %*% covc %*% t(rGram1)
+  C2 <-  L1 %*% covc %*% t(L1)
   C2 <- (C2 + t(C2))/2
   dC2 <- La.svd(C2) 
   wa <- dC2$u %*% tcrossprod(diag((1/dC2$d)^0.5), dC2$u)
-  asta <- W1 %*% wa %*% rGram1 %*% a
+  asta <- W1 %*% wa %*% L1 %*% a
   
   Lfdobj <- eigenfPar$Lfd
   lambda <- eigenfPar$lambda
@@ -42,6 +51,7 @@ ffobi <- function(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
   nr <- numeric()
   for (i in 1:ncol(asta)) nr[i] <- (t(asta[,i]) %*% J %*% asta[,i]);
   ast <- asta %*% diag(nr)
+  kurt <- tcrossprod(ast)/(nrep * (ncomp + 2))
   kurt <- tcrossprod(ast)/nrep
   C4 <- rGram %*% kurt %*% t(rGram)
   C4  <- (C4 + t(C4))/2

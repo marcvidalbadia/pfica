@@ -6,65 +6,69 @@ pspline.kffobi <- function(fdx, ncomp = fdx$basis$nbasis, pp = 0, r = 2,
   if (length(pr) != 1 & is.character(pr)) {
     pr <- "KL.st"
   } else if (!is.character(pr)) {
-    stop("Select a functional data object to project")
+    stop("Select a functional data object to project.")
   }
   if (center) {
     fdx <- center.fd(fdx)
   }
   a <- fdx$coefs
+  nrep <- ncol(a)
+  if (nrep < 2) 
+    stop("ICA not possible without replications.")
   phi <- fdx$basis
   if (shrinkage == TRUE) {
-    cov <- corpcor::cov.shrink(t(a), verbose = F)
-  } else {
-    cov <- tcrossprod(a)/ncol(a) }
+    cov <- corpcor::cov.shrink(t(a), verbose = F)/nrep
+  } else { cov <- tcrossprod(a)/nrep }
   delta <- diff(diag(nrow(a)), differences = r)
-  Pr <- t(delta) %*% delta
-  J <- inprod(phi, phi)
-  L <- J + (pp*Pr)
-  Li <- solve(chol(L))
-  rGram <- crossprod(Li,J)
+  Pr <- crossprod(delta)
+  G <- inprod(phi, phi)
+  Gl <- G + (pp*Pr)
+  L <- chol(Gl)
+  Li <- solve(L)
+  rGram <- crossprod(Li,G)
   C2 <- rGram %*% cov %*% t(rGram); C2  <- (C2 + t(C2))/2
   svdc <- La.svd(C2)
+  eigenc <- svdc$d
   u <- as.matrix(svdc$u[, 1:ncomp])
-  b <- Li %*% u
-  f <- fd(b, phi)
-  z <- inprod(fdx, f)
-  svdz <- La.svd(crossprod(z))
-  ds <- diag(c(1/sqrt(svdz$d)))
-  wz <- ds %*% t(svdz$u)
+  Q <- solve(Gl) %*% G
+  Qs <- expm::sqrtm(Q)
+  b <-  Qs %*% solve(crossprod(Li,G)) %*% u
+  #diag(t(b)%*%J%*%b) #check norms
+  gamma <- fd(b,bbasis)
+  z <- inprod(fdx, gamma)
+  svdz <- La.svd(crossprod(z)/nrep)
+  wz <- svdz$u %*% crossprod(diag(c(1/sqrt(svdz$d))),svdz$u)
   zst <- z %*% wz
   nr <- sqrt(rowSums(zst^2))
   z.st <- nr * zst
-  C4 <- crossprod(z.st)/(ncol(a) * (ncomp + 2))
+  C4 <- crossprod(z.st)/(nrep * (ncomp + 2))
   svdk <- La.svd(C4)
-  eigenk  <- svdk$d
+  eigenk  <- svdk$d/sum(svdk$d)
   v <- svdk$u
   c <- b %*% v
-  h <- fd(c, phi)
-  V <- La.svd(cov)
+  #diag(t(c)%*%J%*%c) #check norms
+  psi <- fd(c, phi)
+  Ls <- chol(G)
+  V2 <- Ls %*% cov %*% t(Ls); C2  <- (C2 + t(C2))/2
+  V <- La.svd(V2)
   wa <- V$u %*% diag(c(1/sqrt(V$d))) %*% t(V$u)
-  wa <- sqrt(ncol(a)-1)*wa
-  ast <- wa %*% a
+  ast <- solve(Ls) %*% wa %*% Ls %*% a
   xst <- fd(ast, phi)
   KL <- fd(b %*% t(z), phi)
   KLst <- fd(b %*% t(zst), phi)
   project <- list(fdx, xst, KL, KLst)
   names(project) <- c("fdx", "fdx.st", "KL", "KL.st")
-  zi <- inprod(project[[paste(pr)]], h)
-  kurt <- vector()
-  for (i in 1:ncomp) {
-    K <- kurtosis(zi[,i])
-    kurt[i]=K}
+  zi <- inprod(project[[paste(pr)]], psi)
   if (plotfd) {
-    oldpar <- par(mfrow=c(2,3), no.readonly = TRUE)
+    oldpar <- par(mfrow=c(1,2), no.readonly = TRUE)
     on.exit(par(oldpar))
     for (j in 1:ncomp){
-      plot(h[j])
-      title(paste('IC', j, "Kurt:", round(kurt[j],3)))
+      plot(psi[j])
+      title(paste('IC', j, "Kurt:", round(eigenk[j],3)))
       par(ask=T)}; par(ask=F)}
-  colnames(h$coefs) <- paste("eigenf.", c(1:ncomp), sep = "-")
-  rownames(h$coefs) <- h$basis$names
-  FICA <- list(h, kurt, zi)
+  colnames(psi$coefs) <- paste("eigenf.", c(1:ncomp), sep = "-")
+  rownames(psi$coefs) <- psi$basis$names
+  FICA <- list(psi, eigenk, zi)
   names(FICA) <- c("eigenbasis", "kurtosis", "scores")
   return(FICA)
 }

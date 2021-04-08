@@ -12,15 +12,15 @@ kffobi(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
   \item{fdx}{a functional data object obtained from the \strong{fda} package.}
   \item{ncomp}{number of independent components to compute.}
   \item{eigenfPar}{a functional parameter object, obtained from the \strong{fda} package, that defines the principal component functions to be estimated.}
-  \item{pr}{the functional data object to project  into the space spanned by the eigenfunctions of the FOBI operator.  To compute the independent components, the usual procedure is to use \code{KL.st}, the standardized principal component expansion. Thus, if \code{pr} is not supplied, \code{KL.st} is used.}
+  \item{pr}{the functional data object to project  into the space spanned by the eigenfunctions of the kurtosis operator.  To compute the independent components, the usual procedure is to use \code{KL.st}, the standardized principal component expansion. Thus, if \code{pr} is not supplied, \code{KL.st} is used.}
   \item{shrinkage}{uses shrinkage estimators to compute the covariance matrix of the coordinate vectors of the KL expansion.}
   \item{center}{a logical value indicating whether the mean function has to be subtracted from each functional observation.}
-  \item{plotfd}{a logical value indicating whether to plot the eigenfunctions \cr of the FOBI operator.}}
+  \item{plotfd}{a logical value indicating whether to plot the eigenfunctions \cr of the kurtosis operator.}}
 \details{Note that \code{kffobi} first computes the (penalized) functional PCA; see Aguilera and Aguilera-Morillo (2013) for a detailed discussion. Thus here,  the IC model for functional data consists in performing the multivariate ICA of the KL coordinate vectors in terms of the PC weight functions.}
 
 \value{a list with the following named entries:
 \item{eigenbasis}{a functional data object for the eigenfunctions or independent factors.}
-\item{kurtosis}{a numeric vector giving the kurtosis associated to each independent component vector.}
+\item{kurtosis}{a numeric vector giving the proportion of variance kurtosis explained by each eigenfunction.}
 \item{scores}{a matrix whose column vectors are the independent components.}}
 \references{
 Aguilera, AM. and MC. Aguilera-Morillo (2013). “Penalized PCA approaches for B-spline expansions of smooth functional data”. In: \emph{Applied Mathematics and Computation} 219(14), pp. 7805–7819.

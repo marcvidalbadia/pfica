@@ -26,9 +26,6 @@ ffobi <- function(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
   
   if (shrinkage == TRUE) covc <- corpcor::cov.shrink(t(a), verbose = F)/nrep
   else covc <- tcrossprod(a)/nrep
-  if (shrinkage == TRUE) 
-    covc <- corpcor::cov.shrink(t(a), verbose = F)
-  else covc <- tcrossprod(a);
   
   C2 <-  L1 %*% covc %*% t(L1)
   C2 <- (C2 + t(C2))/2
@@ -49,10 +46,9 @@ ffobi <- function(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
   rGram <- crossprod(W, J)
   
   nr <- numeric()
-  for (i in 1:ncol(asta)) nr[i] <- (t(asta[,i]) %*% J %*% asta[,i]);
+  for (i in 1:ncol(asta)) nr[i] <- (t(asta[,i]) %*% G %*% asta[,i]);
   ast <- asta %*% diag(nr)
   kurt <- tcrossprod(ast)/(nrep * (ncomp + 2))
-  kurt <- tcrossprod(ast)/nrep
   C4 <- rGram %*% kurt %*% t(rGram)
   C4  <- (C4 + t(C4))/2
   

@@ -21,6 +21,7 @@ ffobi(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
 \value{a list with the following named entries:
 \item{eigenbasis}{a functional data object for the eigenfunctions or independent factors.}
 \item{kurtosis}{a numeric vector giving the kurtosis associated to each independent component vector.}
+ \item{eigenvalues}{a numeric vector giving the eigenvalues of the kurtosis operator.}
 \item{scores}{a matrix whose column vectors are the independent components.}}
 \references{
 Peña, C., J. Prieto, and C. Rendón (2014). \emph{Independent components techniques based

@@ -17,7 +17,6 @@ ffobi <- function(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
   if (center) 
     fdx <- center.fd(fdx);
   
-  a <- fdx$coefs 
   nrep <- dim(a)[2]
   phi <- fdx$basis
   G <- inprod(phi, phi)
@@ -46,9 +45,9 @@ ffobi <- function(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
   rGram <- crossprod(W, J)
   
   nr <- numeric()
-  for (i in 1:ncol(asta)) nr[i] <- (t(asta[,i]) %*% G %*% asta[,i]);
+  for (i in 1:ncol(asta)) nr[i] <- (t(asta[,i]) %*% J %*% asta[,i]);
   ast <- asta %*% diag(nr)
-  kurt <- tcrossprod(ast)/(nrep * (ncomp + 2))
+  kurt <- tcrossprod(ast)/nrep
   C4 <- rGram %*% kurt %*% t(rGram)
   C4  <- (C4 + t(C4))/2
   

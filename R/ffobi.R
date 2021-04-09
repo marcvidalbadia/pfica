@@ -50,7 +50,6 @@ ffobi <- function(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
   C4 <- rGram %*% kurt %*% t(rGram)
   C4  <- (C4 + t(C4))/2
 
-  #Alternative discretized version of the Kurtosis operator
   #C4 <- rGram%*%asta%*%t(asta)%*%t(rGram)%*%rGram%*%asta%*%t(asta)%*%t(rGram)
   #C4  <- (C4 + t(C4))/2
 

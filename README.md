@@ -6,7 +6,7 @@
 
   This package provides a collection of tools for performing univariate functional independent component analysis (FICA) using different types of basis. The decomposition of the kurtosis or FOBI operator is used for blind source separation and has powerful discriminating properties. Our methods are iterfaced with the  **fda** package. 
   
-  News: we are preparing **pfica** 0.1.2. This version will include some corrections on main the **pfica** functions of the published version 0.1.1.
+  News: we are preparing **pfica** 0.1.2. This version will include new functions and some corrections on main the **pfica** functions of the published version 0.1.1.
 
   ### Installation of the current development version
   The development version of **pfica** can be installed using:

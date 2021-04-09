@@ -2,7 +2,7 @@
 \alias{kffobi}
 \title{Smoothed functional ICA in terms of principal components}
 \description{
- This function computes the ordinary ICA procedure from a penalized principal component expansion (also known as Karhunen-Loeve expansion) whose eigenbasis is expressed in terms of basis functions (Fourier, B-splines...). The estimation method is based on the use of fourth moments (kurtosis), in which it is assumed that the independent components have different kurtosis values. The proposed algorithm can be considered an extension of the IC model proposed in Li et al. (2015). This function provides more accurate estimates than \link{ffobi} and was used in Vidal (2020) to identify artifactual independent curves in bioelectrical signals.}
+ This function computes the ordinary ICA procedure from a penalized principal component expansion (also known as Karhunen-Loeve expansion) whose eigenbasis is expressed in terms of basis functions (Fourier, B-splines...). The estimation method is based on the use of fourth moments (kurtosis), in which it is assumed that the independent components have different kurtosis values. The proposed algorithm can be considered an extension of the IC model proposed in Li et al. (2015).}
 \usage{
 kffobi(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
        pr = c("fdx", "fdx.st", "KL", "KL.st"),
@@ -29,9 +29,6 @@ Li, B., G. Van Bever, H. Oja, R. Sabolova, and F. Critchley (2015). “Functiona
 
 Miettinen, J., K. Nordhausen, and S. Taskinen (2017). “Blind source separation based on joint diagonalization in R: The packages JADE and BSSasymp”. In: \emph{Journal of Statistical Software} 76.2, pp. 1–31.
 
-Ramsay, J. and B. Silverman (2005). \emph{Functional Data Analysis}. Springer.
-
-Vidal, M. (2020). \emph{Functional Independent Component Analysis in Bioelectrical Signal Processing}. MA thesis. Universidad de Granada.
 }
 \author{Marc Vidal, Ana Mª Aguilera}
 \seealso{\code{\link{kd}}, \code{\link{ffobi}}}

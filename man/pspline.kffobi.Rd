@@ -18,7 +18,7 @@ pspline.kffobi(fdx, ncomp = fdx$basis$nbasis, pp = 0, r = 2,
   \item{center}{a logical value indicating whether the mean function has to be subtracted from each functional observation.}
   \item{plotfd}{a logical value indicating whether to plot the eigenfunctions \cr of the kurtosis operator.}
 }
-\details{To compute the penalty matrix, the following code is used: \eqn{\Delta^{2}=\mathtt{diff(diag(nknots+2), differences = 2)}}, where \code{nknots} is the  number of basis knots. As in \code{\link{kffobi}}, the functional ICA of the principal component expansion is equivalent to the multivariate ICA of the KL coordinate vectors; see \emph{Details} in \code{\link{kffobi}}.}
+\details{To compute the penalty matrix, the following code is used: \eqn{\Delta^{2}=\mathtt{diff(diag(nknots+2), differences = 2)}}, where \code{nknots} is the  number of basis knots. As in \code{\link{kffobi}}, the functional ICA of the principal component expansion is equivalent to the multivariate ICA of the principal coordinate vectors; see \emph{Details} in \code{\link{kffobi}}.}
 \value{
 a list with the following named entries:
 \item{eigenbasis}{a functional data object for the eigenfunctions or independent factors.}
@@ -27,9 +27,7 @@ a list with the following named entries:
 \references{
 Aguilera, AM. and MC. Aguilera-Morillo (2013). “Penalized PCA approaches for B-spline expansions of smooth functional data”. In: \emph{Applied Mathematics and Computation} 219(14), pp. 7805–7819.
 
-Ramsay, J. and B. Silverman (2005). \emph{Functional Data Analysis}. Springer.
-
-Vidal, M. (2020). \emph{Functional Independent Component Analysis in Bioelectrical Signal Processing}. MA thesis. Universidad de Granada.
+Vidal, M., M. Rosso  and A. M. Aguilera (2021). Smoothed independent component analysis of EEG data. \emph{Submitted}.
 }
 \author{Marc Vidal, Ana Mª Aguilera}
 \seealso{\code{\link{kffobi}}}

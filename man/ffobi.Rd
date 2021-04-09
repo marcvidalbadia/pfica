@@ -23,15 +23,7 @@ ffobi(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
 \item{kurtosis}{a numeric vector giving the proportion of variance kurtosis explained by each eigenfunction.}
 \item{scores}{a matrix whose column vectors are the independent components.}}
 \references{
-Peña, C., J. Prieto, and C. Rendón (2014). \emph{Independent components techniques based
-on kurtosis for functional data analysis}. Working paper 14-10. Universidad Carlos
-III de Madrid.
-
-Ramsay, J. and B. Silverman (2005). \emph{Functional Data Analysis}. Springer.
-
-Schafer, J. and K. Strimmer (2005). A shrinkage approach to large-scale covariance matrix estimation and implications for functional genomics. Statistical Applications in Genetics and Molecular Biology, 4.32(1).
-
-Vidal, M. (2020). \emph{Functional Independent Component Analysis in Bioelectrical Signal Processing}. MA thesis. Universidad de Granada.
+Peña, C., J. Prieto, and C. Rendón (2014). \emph{Independent components techniques based on kurtosis for functional data analysis}. Working paper 14-10. Universidad Carlos III de Madrid.
 }
 \author{Marc Vidal, Ana Mª Aguilera}
 \seealso{\code{\link{kffobi}}}

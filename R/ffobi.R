@@ -34,10 +34,9 @@ ffobi <- function(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
   Lfdobj <- eigenfPar$Lfd
   lambda <- eigenfPar$lambda
   rphi <- eigenfPar$fd$basis
-  L <- eval.penalty(rphi, 0)
   if (lambda > 0) {
     R <- eval.penalty(rphi, Lfdobj)
-    L <- L + lambda * R
+    L <- G + lambda * R
   }; L <- (L + t(L))/2
   J <- inprod(rphi, phi)
   W <- solve(chol(L))
@@ -57,22 +56,22 @@ ffobi <- function(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
   u <- as.matrix(svdk$u[, 1:ncomp])
   eigenk <- svdk$d[1:ncomp]/sum(svdk$d)
   b <- W %*% u
-  h <- fd(b, rphi)
+  psi <- fd(b, rphi)
   xst <- fd(asta, phi)
   project <- list(fdx, xst)
   names(project) <- c("fdx", "fdx.st")
-  zi <- inprod(project[[paste(pr)]], h)
+  zi <- inprod(project[[paste(pr)]], psi)
 
   if (plotfd) {
     oldpar <- par(mfrow=c(1,2), no.readonly = TRUE)
     on.exit(par(oldpar))
     for (j in 1:ncomp){
-      plot(h[j])
+      plot(psi[j])
       title(paste('IC', j, "Kurt:", round(eigenk[j],3)))
       par(ask=T)}; par(ask=F)}
-  colnames(h$coefs) <- paste("eigenf.", c(1:ncomp), sep = "-")
-  rownames(h$coefs) <- h$basis$names
-  FICA <- list(h, eigenk, zi)
+  colnames(psi$coefs) <- paste("eigenf.", c(1:ncomp), sep = "-")
+  rownames(psi$coefs) <- psi$basis$names
+  FICA <- list(psi, eigenk, zi)
   names(FICA) <- c("eigenbasis", "kurtosis", "scores")
   return(FICA)
 }

@@ -20,8 +20,7 @@ ffobi(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
 \details{This IC model for functional data consists in performing the multivariate ICA of a transformation of the coordinate vectors associated to a basis of functions. The algorithm also incorporates a continuous penalty in the orthonormality constraint.}
 \value{a list with the following named entries:
 \item{eigenbasis}{a functional data object for the eigenfunctions or independent factors.}
-\item{kurtosis}{a numeric vector giving the kurtosis associated to each independent component vector.}
- \item{eigenvalues}{a numeric vector giving the eigenvalues of the kurtosis operator.}
+\item{kurtosis}{a numeric vector giving the proportion of variance kurtosis explained by each eigenfunction.}
 \item{scores}{a matrix whose column vectors are the independent components.}}
 \references{
 Peña, C., J. Prieto, and C. Rendón (2014). \emph{Independent components techniques based
@@ -47,12 +46,9 @@ Lfdobj <- int2Lfd(max(0, norder(B)-2))
 penf <- fdPar(B, Lfdobj, lambda=10^4)
 ica.fd <- ffobi(x, 16, penf)
 
-## Plot by region: classification in order of maximum kurtosis
-kurt <- ica.fd$kurtosis
-k1 <- which.max(kurt)
-k2 <- which(kurt==max(kurt[kurt!=max(kurt)]))
+## Plot by region in order of maximum kurtosis (outliers)
 sc <- ica.fd$scores
-plot(sc[,c(k1)], sc[,c(k2)], ylab = "", xlab = "")
-text(sc[,c(k1)], sc[,c(k2)], CanadianWeather$region, pch=0.5, cex=0.6)
+plot(sc[,1], sc[,2], ylab = "", xlab = "")
+text(sc[,1], sc[,2], CanadianWeather$region, pch=0.5, cex=0.6)
 }
 \keyword{functional ICA}

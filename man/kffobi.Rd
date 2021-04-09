@@ -2,7 +2,7 @@
 \alias{kffobi}
 \title{Smoothed functional ICA in terms of principal components}
 \description{
- This function computes the ordinary ICA procedure from a penalized principal component expansion (also known as Karhunen-Loeve expansion) whose eigenbasis is expressed in terms of basis functions (Fourier, B-splines...). The estimation method is based on the use of fourth moments (FOBI), in which it is assumed that the independent components have different kurtosis values. The proposed algorithm can be considered an extension of the IC model proposed in Li et al. (2015). This function provides more accurate estimates than \link{ffobi} and was used in Vidal (2020) to identify artifactual independent curves in bioelectrical signals.}
+ This function computes the ordinary ICA procedure from a penalized principal component expansion (also known as Karhunen-Loeve expansion) whose eigenbasis is expressed in terms of basis functions (Fourier, B-splines...). The estimation method is based on the use of fourth moments (kurtosis), in which it is assumed that the independent components have different kurtosis values. The proposed algorithm can be considered an extension of the IC model proposed in Li et al. (2015). This function provides more accurate estimates than \link{ffobi} and was used in Vidal (2020) to identify artifactual independent curves in bioelectrical signals.}
 \usage{
 kffobi(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
        pr = c("fdx", "fdx.st", "KL", "KL.st"),

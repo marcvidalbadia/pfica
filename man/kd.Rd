@@ -2,7 +2,9 @@
 \alias{kd}
 \title{Kurtosis distance}
 \description{This function calculates the kurtosis distance (Vidal, 2020), which is an ad-hoc measure to select the number of components to be computed in \code{\link{kffobi}} and \code{\link{pspline.kffobi}}.}
-\usage{kd(fdx, hm = fdPar(fdx), pp = NULL, r = 2, centerfd = FALSE, qmin = 2, qmax = 5)}
+\usage{kd(fdx, hm = fdPar(fdx), pp = NULL, r = 2,
+          pr = c("fdx", "fdx.st", "KL", "KL.st"),
+          centerfd = FALSE, qmin = 2, qmax = 5)}
 \arguments{
 \item{fdx}{a functional data object obtained from the \strong{fda} package.}
   \item{hm}{a functional parameter object, obtained from the \strong{fda} package, that defines the independent component functions to be estimated in \code{\link{kffobi}}.}

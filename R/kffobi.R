@@ -8,21 +8,21 @@ kffobi <- function(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
   } else if (!is.character(pr)) {
     stop("Select a functional data object to project.")
   }
-  if (center) {
-    fdx <- center.fd(fdx)}
+
+  if (center)
+    fdx <- center.fd(fdx);
   a <- fdx$coefs
   nrep <- ncol(a)
-  if (nrep < 2) 
+  if (nrep < 2)
     stop("ICA not possible without replications.")
   phi <- fdx$basis
   rphi <- eigenfPar$fd$basis
   Lfdobj <- eigenfPar$Lfd
   lambda <- eigenfPar$lambda
-  J <- eval.penalty(rphi, 0)
-  if (lambda > 0) {
-    R <- eval.penalty(rphi, Lfdobj)
-    Gl <- J + lambda * R
-  }; Gl <- (Gl + t(Gl))/2
+  J <- inprod(phi,phi)
+  R <- eval.penalty(rphi, Lfdobj)
+  Gl <- J + lambda * R
+  Gl <- (Gl + t(Gl))/2
   L <- chol(Gl)
   Li <- solve(L)
   if (shrinkage == TRUE) {
@@ -39,9 +39,9 @@ kffobi <- function(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
   Qs <- expm::sqrtm(Q)
   b <-  Qs %*% solve(crossprod(Li,G)) %*% u
   #diag(t(b)%*%J%*%b) #check norms
-  gamma <- fd(b,bbasis)
-  z <- inprod(fdx, gamma)
-  #plot(eval.fd(arg,fd(b%*%t(z),bbasis)[20]), col="red", type="l")
+  beta <- fd(b,phi)
+  z <- inprod(fdx, beta)
+  #plot(eval.fd(arg,fd(b%*%t(z),phi)[20]), col="red", type="l")
   svdz <- La.svd(crossprod(z)/nrep)
   wz <- svdz$u %*% diag(c(1/sqrt(svdz$d)))%*% t(svdz$u)
   zst <- z %*% wz
@@ -76,4 +76,5 @@ kffobi <- function(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
   rownames(psi$coefs) <- psi$basis$names
   FICA <- list(psi, eigenk, zi)
   names(FICA) <- c("eigenbasis", "kurtosis", "scores")
+  return(FICA)
 }

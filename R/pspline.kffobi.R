@@ -13,7 +13,7 @@ pspline.kffobi <- function(fdx, ncomp = fdx$basis$nbasis, pp = 0, r = 2,
   }
   a <- fdx$coefs
   nrep <- ncol(a)
-  if (nrep < 2) 
+  if (nrep < 2)
     stop("ICA not possible without replications.")
   phi <- fdx$basis
   if (shrinkage == TRUE) {
@@ -33,8 +33,8 @@ pspline.kffobi <- function(fdx, ncomp = fdx$basis$nbasis, pp = 0, r = 2,
   Q <- solve(Gl) %*% G
   Qs <- expm::sqrtm(Q)
   b <-  Qs %*% solve(crossprod(Li,G)) %*% u
-  #diag(t(b)%*%J%*%b) #check norms
-  gamma <- fd(b,bbasis)
+  #diag(t(b)%*%G%*%b) #check norms
+  gamma <- fd(b,phi)
   z <- inprod(fdx, gamma)
   svdz <- La.svd(crossprod(z)/nrep)
   wz <- svdz$u %*% crossprod(diag(c(1/sqrt(svdz$d))),svdz$u)
@@ -46,7 +46,7 @@ pspline.kffobi <- function(fdx, ncomp = fdx$basis$nbasis, pp = 0, r = 2,
   eigenk  <- svdk$d/sum(svdk$d)
   v <- svdk$u
   c <- b %*% v
-  #diag(t(c)%*%J%*%c) #check norms
+  #diag(t(c)%*%G%*%c) #check norms
   psi <- fd(c, phi)
   Ls <- chol(G)
   V2 <- Ls %*% cov %*% t(Ls); C2  <- (C2 + t(C2))/2

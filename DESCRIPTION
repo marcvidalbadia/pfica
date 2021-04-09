@@ -1,5 +1,5 @@
 Package: pfica
-Version: 0.1.1
+Version: 0.1.2
 Title: Penalized Independent Component Analysis for Univariate Functional Data
 Author: Marc Vidal, Ana Mª Aguilera
 Maintainer: Marc Vidal <marc.vidalbadia@ugent.be>
@@ -7,7 +7,8 @@ Description: Performs penalized independent component analysis for univariate fu
 License: GPL (>= 2)
 Depends: 
     R (>= 2.10), fda
-Imports: corpcor, moments
+Imports: corpcor, expm, moments
+URL: https://github.com/m-vidal/p-fica
 Encoding: UTF-8
 LazyData: true
 NeedsCompilation: no

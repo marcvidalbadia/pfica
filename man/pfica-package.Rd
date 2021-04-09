@@ -6,10 +6,11 @@
 \alias{pfica-package}
 \title{Functional independent component analysis}
 \description{
-\code{pfica} Performs penalized (and non-penalized) independent component analysis for univariate functional data. Two alternative versions are implemented, both based on the spectral decomposition of the kurtosis operator. Our methods are iterfaced with the basis functions provided in the \strong{fda} package.
+\code{pfica} Performs penalized (and non-penalized) independent component analysis for univariate functional data. Two alternative versions are implemented, both based on the spectral decomposition of the kurtosis operator. Our methods are interfaced with the basis functions provided in the \strong{fda} package.
 }
 \details{
-This package contains a set of tools for performing functional independent component analysis (FICA) by analysing the kurtosis structure of whitened data. Two FICA versions are considered depending on the basis representation of the data: \code{\link{ffobi}} computes the independent components using a canonical basis of functions and \code{\link{kffobi}} uses the weight functions of the covariance operator. The latter is also extended using a discrete penalty in  \code{\link{pspline.kffobi}}, being this function computationally more efficient. The current FICA routines use Mahalanobis kernel whitening and shrinkage covariance estimators to improve the outcomes in the estimation process.}
+This package contains a set of tools for performing functional independent component analysis (FICA) by analysing the kurtosis structure of the whitened original data. Two FICA versions are considered depending on the basis representation: \code{\link{ffobi}} computes the independent components using a canonical basis of functions and \code{\link{kffobi}} uses the weight functions of the covariance operator (in terms of basis functions). The latter is also extended using a discrete penalty in  \code{\link{pspline.kffobi}}, being this function
+computationally more efficient. The current FICA routines use Mahalanobis kernel whitening and shrinkage covariance estimators to improve the outcomes in the estimation process.}
 \references{
 Ramsay, J. and B. Silverman (2005). \emph{Functional Data Analysis}. Springer.
 

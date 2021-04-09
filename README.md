@@ -4,7 +4,7 @@
   [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/pfica)](https://cran.r-project.org/package=pfica)
   [![Licence](https://img.shields.io/badge/licence-GPL--2-blue.svg)](https://www.gnu.org/licenses/gpl-2.0.en.html)
 
-  This package provides a collection of tools for performing univariate functional independent component analysis (FICA) using different types of basis. The decomposition of the kurtosis or FOBI operator is used for blind source separation and has powerful discriminating properties. Our methods are iterfaced with the  **fda** package. 
+Performs penalized (and non-penalized) independent component analysis for univariate functional data. Two alternative versions are implemented, both based on the spectral decomposition of the kurtosis operator. Our methods are iterfaced with the basis functions provided in the **fda** package.
   
   News: we are preparing **pfica** 0.1.2. This version will include new functions and some issues on the main **pfica** functions of the published version 0.1.1.
 

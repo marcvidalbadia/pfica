@@ -28,16 +28,15 @@ pspline.kffobi <- function(fdx, ncomp = fdx$basis$nbasis, pp = 0, r = 2,
   rGram <- crossprod(Li,G)
   C2 <- rGram %*% cov %*% t(rGram); C2  <- (C2 + t(C2))/2
   svdc <- La.svd(C2)
-  eigenc <- svdc$d
   u <- as.matrix(svdc$u[, 1:ncomp])
   Q <- solve(Gl) %*% G
   Qs <- expm::sqrtm(Q)
-  b <-  Qs %*% solve(crossprod(Li,G)) %*% u
+  b <-  Qs %*% solve(t(Li) %*% G) %*% u
   #diag(t(b)%*%G%*%b) #check norms
-  gamma <- fd(b,phi)
-  z <- inprod(fdx, gamma)
+  beta <- fd(b,phi)
+  z <- inprod(fdx, beta)
   svdz <- La.svd(crossprod(z)/nrep)
-  wz <- svdz$u %*% crossprod(diag(c(1/sqrt(svdz$d))),svdz$u)
+  wz <- svdz$u %*% diag(c(1/sqrt(svdz$d)))%*% t(svdz$u)
   zst <- z %*% wz
   nr <- sqrt(rowSums(zst^2))
   z.st <- nr * zst
@@ -59,6 +58,10 @@ pspline.kffobi <- function(fdx, ncomp = fdx$basis$nbasis, pp = 0, r = 2,
   project <- list(fdx, xst, KL, KLst)
   names(project) <- c("fdx", "fdx.st", "KL", "KL.st")
   zi <- inprod(project[[paste(pr)]], psi)
+
+  kurt <- vector()
+  for (i in 1:ncomp) kurt[i] <- moments::kurtosis(zi[,i])
+
   if (plotfd) {
     oldpar <- par(mfrow=c(1,2), no.readonly = TRUE)
     on.exit(par(oldpar))
@@ -68,7 +71,14 @@ pspline.kffobi <- function(fdx, ncomp = fdx$basis$nbasis, pp = 0, r = 2,
       par(ask=T)}; par(ask=F)}
   colnames(psi$coefs) <- paste("eigenf.", c(1:ncomp), sep = "-")
   rownames(psi$coefs) <- psi$basis$names
-  FICA <- list(psi, eigenk, zi)
-  names(FICA) <- c("eigenbasis", "kurtosis", "scores")
+
+  FICA <- list(svdc$d,beta,z,svdk$d,psi,zi,kurt)
+  names(FICA) <- c("PCA.eigv",
+                   "PCA.basis",
+                   "PCA.scores",
+                   "ICA.eigv",
+                   "ICA.basis",
+                   "ICA.scores",
+                   "ICA.kurtosis")
   return(FICA)
 }

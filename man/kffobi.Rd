@@ -2,7 +2,7 @@
 \alias{kffobi}
 \title{Smoothed functional ICA in terms of principal components}
 \description{
- This function computes the ordinary ICA procedure from a penalized principal component expansion (also known as Karhunen-Loeve expansion) whose eigenbasis is expressed in terms of basis functions (Fourier, B-splines...). The estimation method is based on the use of fourth moments (kurtosis), in which it is assumed that the independent components have different kurtosis values. The proposed algorithm can be considered an extension of the IC model proposed in Li et al. (2015).}
+ This function computes the ordinary ICA procedure from a penalized principal component expansion (also known as Karhunen-Loeve expansion) whose eigenbasis is expressed in terms of basis functions (Fourier, B-splines...). The estimation method is based on the use of fourth moments (kurtosis), in which it is assumed that the independent components have different kurtosis values. The proposed algorithm can be considered an extension of the functional ICA proposed in Li et al. (2015).}
 \usage{
 kffobi(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
        pr = c("fdx", "fdx.st", "KL", "KL.st"),
@@ -16,12 +16,17 @@ kffobi(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
   \item{shrinkage}{uses shrinkage estimators to compute the covariance matrix of the coordinate vectors of the KL expansion.}
   \item{center}{a logical value indicating whether the mean function has to be subtracted from each functional observation.}
   \item{plotfd}{a logical value indicating whether to plot the eigenfunctions \cr of the kurtosis operator.}}
-\details{Note that \code{kffobi} first computes the (penalized) functional PCA; see Aguilera and Aguilera-Morillo (2013) for a detailed discussion. Thus here,  the IC model for functional data consists in performing the multivariate ICA of the KL coordinate vectors in terms of the PC weight functions.}
+\details{Note that \code{kffobi} first computes the (penalized) functional PCA; see Aguilera and Aguilera-Morillo (2013) for a detailed discussion. Thus,  this functional ICA consists of performing the multivariate ICA of the PC coordinate vectors in terms of the PC weight functions.}
 
 \value{a list with the following named entries:
-\item{eigenbasis}{a functional data object for the eigenfunctions or independent factors.}
-\item{kurtosis}{a numeric vector giving the proportion of variance kurtosis explained by each eigenfunction.}
-\item{scores}{a matrix whose column vectors are the independent components.}}
+\item{PCA.eigv}{a numeric vector giving the eigenvalues of the covariance operator.}
+\item{PCA.basis}{a functional data object for the eigenfunctions of the covariance operator.}
+\item{PCA.scores}{a matrix whose column vectors are the principal components.}
+\item{ICA.eigv}{a numeric vector giving the eigenvalues of the kurtosis operator.}
+\item{ICA.basis}{a functional data object for the eigenfunctions of the covariance operator.}
+\item{ICA.scores}{a matrix whose column vectors are the projection coefficients for \code{fdx, fdx.st, KL} or \code{KL.st}.}
+\item{ICA.kurtosis}{a numeric vector giving the kurtosis of each component vector.}
+}
 \references{
 Aguilera, AM. and MC. Aguilera-Morillo (2013). “Penalized PCA approaches for B-spline expansions of smooth functional data”. In: \emph{Applied Mathematics and Computation} 219(14), pp. 7805–7819.
 

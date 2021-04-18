@@ -11,7 +11,7 @@ pspline.kffobi(fdx, ncomp = fdx$basis$nbasis, pp = 0, r = 2,
 \arguments{
   \item{fdx}{a functional data object obtained from the \strong{fda} package.}
   \item{ncomp}{number of independent components to compute.}
-  \item{pp}{the penalty parameter. It can be estimated by \emph{leave-one-out} cross-validation.}
+  \item{pp}{the penalty parameter. It can be estimated by \emph{leave-one-out} cross-validation or \emph{baseline} cross-validation (see \code{\link{bcv}}).}
   \item{r}{a number indicating the order of the penalty.}
   \item{pr}{the functional data object to project  into the space spanned by the eigenfunctions of the kurtosis operator.  To compute the independent components, the usual procedure is to use \code{KL.st}, the standardized principal component expansion. Thus, if \code{pr} is not supplied, then \code{KL.st} is used.}
   \item{shrinkage}{uses shrinkage estimators to compute the covariance matrix of the coordinate vectors of the KL expansion.}
@@ -21,9 +21,14 @@ pspline.kffobi(fdx, ncomp = fdx$basis$nbasis, pp = 0, r = 2,
 \details{To compute the penalty matrix, the following code is used: \eqn{\Delta^{2}=\mathtt{diff(diag(nknots+2), differences = 2)}}, where \code{nknots} is the  number of basis knots. As in \code{\link{kffobi}}, the functional ICA of the principal component expansion is equivalent to the multivariate ICA of the principal coordinate vectors; see \emph{Details} in \code{\link{kffobi}}.}
 \value{
 a list with the following named entries:
-\item{eigenbasis}{a functional data object for the eigenfunctions or independent factors.}
-\item{kurtosis}{a numeric vector giving the proportion of variance kurtosis explained by each eigenfunction.}
-\item{scores}{a matrix whose column vectors are the independent components.}}
+\item{PCA.eigv}{a numeric vector giving the eigenvalues of the covariance operator.}
+\item{PCA.basis}{a functional data object for the eigenfunctions of the covariance operator.}
+\item{PCA.scores}{a matrix whose column vectors are the principal components.}
+\item{ICA.eigv}{a numeric vector giving the eigenvalues of the kurtosis operator.}
+\item{ICA.basis}{a functional data object for the eigenfunctions of the covariance operator.}
+\item{ICA.scores}{a matrix whose column vectors are the projection coefficients for \code{fdx, fdx.st, KL} or \code{KL.st}.}
+\item{ICA.kurtosis}{a numeric vector giving the kurtosis of each component vector.}
+}
 \references{
 Aguilera, AM. and MC. Aguilera-Morillo (2013). “Penalized PCA approaches for B-spline expansions of smooth functional data”. In: \emph{Applied Mathematics and Computation} 219(14), pp. 7805–7819.
 
@@ -40,7 +45,7 @@ B <- create.bspline.basis(rangeval=c(min(arg),max(arg)), nbasis=16)
 x <- Data2fd(Temp, argvals = arg, B)
 ica.fd <- pspline.kffobi(x, 16, pp = 10)
 ## Plot by region in order of maximum kurtosis (outliers)
-sc <- ica.fd$scores
+sc <- ica.fd$ICA.scores
 plot(sc[,1], sc[,2], ylab = "", xlab = "")
 text(sc[,1], sc[,2], CanadianWeather$region, pch=0.5, cex=0.6)}
 \keyword{functional ICA}

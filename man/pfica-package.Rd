@@ -6,10 +6,10 @@
 \alias{pfica-package}
 \title{Functional independent component analysis}
 \description{
-\code{pfica} Performs penalized (and non-penalized) independent component analysis for univariate functional data. Two alternative versions are implemented, both based on the spectral decomposition of the kurtosis operator. Our methods are interfaced with the basis functions provided in the \strong{fda} package.
+\code{pfica::} Performs penalized (and non-penalized) independent component analysis for univariate functional data. Two alternative versions are implemented, both based on the spectral decomposition of the kurtosis operator. Our methods are interfaced with the basis systems provided in the \strong{fda} package.
 }
 \details{
-This package contains a set of tools for performing functional independent component analysis (FICA) by analysing the kurtosis structure of the whitened original data. Two FICA versions are considered depending on the basis representation: \code{\link{ffobi}} computes the independent components using a canonical basis of functions and \code{\link{kffobi}} uses the weight functions of the covariance operator (in terms of basis functions). The latter is also extended using a discrete penalty in  \code{\link{pspline.kffobi}}, being this function
+This package contains a set of tools for performing functional independent component analysis (FICA) by analyzing the kurtosis structure of whitened data. Two FICA versions are considered depending on the basis of expansion: \code{\link{ffobi}} computes the independent components from a data representation in a canonical basis of functions, while \code{\link{kffobi}} uses the eigenfunctions of the covariance operator (in terms of basis functions). The application of penalties differs in both algorithms. The former introduces a penalty in the eigenfunctions of the kurtosis operator of a standardized sample; the latter in the eigenfunctions of the covariance operator for a subsequent standardization of the principal component expansion. This algorithm is also extended using a discrete penalty (P-spline) in  \code{\link{pspline.kffobi}}, being this function
 computationally more efficient. The current FICA routines use Mahalanobis kernel whitening and shrinkage covariance estimators to improve the outcomes in the estimation process.}
 \references{
 Ramsay, J. and B. Silverman (2005). \emph{Functional Data Analysis}. Springer.

@@ -17,7 +17,7 @@ ffobi(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
   \item{center}{a logical value indicating whether the mean function has to be subtracted from each functional observation.}
   \item{plotfd}{a logical value indicating whether to plot the eigenfunctions \cr of the kurtosis operator.}
 }
-\details{This IC model for functional data consists in performing the multivariate ICA of a transformation of the coordinate vectors associated to a basis of functions. The algorithm also incorporates a continuous penalty in the orthonormality constraint.}
+\details{This functional ICA consists of performing the multivariate ICA of a transformation of the coordinate vectors associated with a basis of functions. The algorithm also incorporates a continuous penalty in the orthonormality constraint of the kurtosis eigenfunctions.}
 \value{a list with the following named entries:
 \item{eigenbasis}{a functional data object for the eigenfunctions or independent factors.}
 \item{kurtosis}{a numeric vector giving the proportion of variance kurtosis explained by each eigenfunction.}

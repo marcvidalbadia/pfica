@@ -33,7 +33,6 @@ kffobi <- function(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
   rGram <- crossprod(Li, G)
   C2 <- rGram %*% cov %*% t(rGram); C2  <- (C2 + t(C2))/2
   svdc <- La.svd(C2)
-  eigenc <- svdc$d
   u <- as.matrix(svdc$u[, 1:ncomp])
   Q <- solve(Gl) %*% G
   Qs <- expm::sqrtm(Q)
@@ -41,7 +40,6 @@ kffobi <- function(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
   #diag(t(b)%*%J%*%b) #check norms
   beta <- fd(b,phi)
   z <- inprod(fdx, beta)
-  #plot(eval.fd(arg,fd(b%*%t(z),phi)[20]), col="red", type="l")
   svdz <- La.svd(crossprod(z)/nrep)
   wz <- svdz$u %*% diag(c(1/sqrt(svdz$d)))%*% t(svdz$u)
   zst <- z %*% wz
@@ -49,7 +47,7 @@ kffobi <- function(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
   z.st <- nr * zst
   C4 <- crossprod(z.st)/(nrep * (ncomp + 2))
   svdk <- La.svd(C4)
-  eigenk  <- svdk$d
+  eigenk  <- svdk$d/sum(svdk$d)
   v <- svdk$u
   c <- b %*% v
   #diag(t(c)%*%J%*%c) #check norms
@@ -65,6 +63,10 @@ kffobi <- function(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
   project <- list(fdx, xst, KL, KLst)
   names(project) <- c("fdx", "fdx.st", "KL", "KL.st")
   zi <- inprod(project[[paste(pr)]], psi)
+
+  kurt <- vector()
+  for (i in 1:ncomp) kurt[i] <- moments::kurtosis(zi[,i])
+
   if (plotfd) {
     oldpar <- par(mfrow=c(1,2), no.readonly = TRUE)
     on.exit(par(oldpar))
@@ -74,7 +76,14 @@ kffobi <- function(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
       par(ask=T)}; par(ask=F)}
   colnames(psi$coefs) <- paste("eigenf.", c(1:ncomp), sep = "-")
   rownames(psi$coefs) <- psi$basis$names
-  FICA <- list(psi, eigenk, zi)
-  names(FICA) <- c("eigenbasis", "kurtosis", "scores")
+
+  FICA <- list(svdc$d,beta,z,svdk$d,psi,zi,kurt)
+  names(FICA) <- c("PCA.eigv",
+                   "PCA.basis",
+                   "PCA.scores",
+                   "ICA.eigv",
+                   "ICA.basis",
+                   "ICA.scores",
+                   "ICA.kurtosis")
   return(FICA)
 }

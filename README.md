@@ -16,6 +16,6 @@ Performs penalized (and non-penalized) independent component analysis for univar
   devtools::install_github("m-vidal/pfica")
   ```
   See the [reference
-  manual](https://github.com/m-vidal/pfica/blob/master/pfica.pdf) for more detailed information about the **pfica** functions.
+  manual](https://github.com/m-vidal/pfica/blob/156daedfb9d9d2366610edf9829d48e234c93d8c/pfica_0.1.2.pdf) for more detailed information about the **pfica** functions.
 
   **ACKNOWLEDGMENTS. S.N** [Daniel Gost](https://danielgost.com) and PAIDI Research Group FQM-307 ([UGR](https://www.ugr.es)).

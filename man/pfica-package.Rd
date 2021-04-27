@@ -16,7 +16,7 @@ Ramsay, J. and B. Silverman (2005). \emph{Functional Data Analysis}. Springer.
 
 Schafer, J. and K. Strimmer (2005). A shrinkage approach to large-scale covariance matrix estimation and implications for functional genomics. Statistical Applications in Genetics and Molecular Biology, 4.32(1).
 
-Vidal, M., M. Rosso  and AM. Aguilera (2021). Smoothed independent component analysis of EEG data. \emph{Submitted}.
+Vidal, M., M. Rosso  and AM. Aguilera (2021). Bi-Smoothed Independent Component Analysis of EEG Data. \emph{Submitted}.
 }
 \seealso{
 Useful links:

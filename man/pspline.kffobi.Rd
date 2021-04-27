@@ -14,7 +14,7 @@ pspline.kffobi(fdx, ncomp = fdx$basis$nbasis, pp = 0, r = 2,
   \item{pp}{the penalty parameter. It can be estimated by \emph{leave-one-out} cross-validation or \emph{baseline} cross-validation (see \code{\link{bcv}}).}
   \item{r}{a number indicating the order of the penalty.}
   \item{pr}{the functional data object to project  into the space spanned by the eigenfunctions of the kurtosis operator.  To compute the independent components, the usual procedure is to use \code{KL.st}, the standardized principal component expansion. Thus, if \code{pr} is not supplied, then \code{KL.st} is used.}
-  \item{shrinkage}{uses shrinkage estimators to compute the covariance matrix of the coordinate vectors of the KL expansion.}
+  \item{shrinkage}{uses shrinkage estimators to compute the covariance matrix of the coordinate vectors.}
   \item{center}{a logical value indicating whether the mean function has to be subtracted from each functional observation.}
   \item{plotfd}{a logical value indicating whether to plot the eigenfunctions \cr of the kurtosis operator.}
 }
@@ -32,7 +32,7 @@ a list with the following named entries:
 \references{
 Aguilera, AM. and MC. Aguilera-Morillo (2013). “Penalized PCA approaches for B-spline expansions of smooth functional data”. In: \emph{Applied Mathematics and Computation} 219(14), pp. 7805–7819.
 
-Vidal, M., M. Rosso  and A. M. Aguilera (2021). Smoothed independent component analysis of EEG data. \emph{Submitted}.
+Vidal, M., M. Rosso  and A. M. Aguilera (2021). Bi-Smoothed Independent Component Analysis of EEG Data. \emph{Submitted}.
 }
 \author{Marc Vidal, Ana Mª Aguilera}
 \seealso{\code{\link{kffobi}}}

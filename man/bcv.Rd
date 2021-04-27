@@ -1,7 +1,7 @@
 \name{bcv}
 \alias{bcv}
-\title{Compute baseline cross-validation criterion}
-\description{The generalized cross-validation method is adapted for functional representations with large basis dimension to select the penalty parameter in \code{\link{pspline.kffobi}}. This function gives the log cross-validation score for given penalty parameter.}
+\title{Compute baseline cross-validation criterion (P-spline version)}
+\description{The generalized cross-validation method is adapted for B-spline representations with large number of knots to select the penalty parameter in \code{\link{pspline.kffobi}}. This function gives the log cross-validation score for given penalty parameter.}
 \usage{ bcv(a, phi, G, r = 2, ncomp, baseline, value = 0.1) }
 \arguments{
   \item{a}{the coefficient matrix of a functional data object obtained from the \strong{fda} package.}
@@ -17,7 +17,7 @@
 The baseline log cross-validation score.
 }
 \references{
-Vidal, M., M. Rosso  and A. M. Aguilera (2021). Smoothed independent component analysis of EEG data. \emph{Submitted}.
+Vidal, M., M. Rosso  and A. M. Aguilera (2021). Bi-Smoothed Independent Component Analysis of EEG Data. \emph{Submitted}.
 }
 \author{ Marc Vidal, Ana Mª Aguilera}
 %\note{}

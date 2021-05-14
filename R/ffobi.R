@@ -10,12 +10,11 @@ ffobi <- function(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
 
   a <- fdx$coefs
   nrep <- ncol(a)
+  
   if (nrep < 2)
     stop("ICA not possible without replications.")
   else if (!is.character(pr))
     stop("Select a functional data object to project")
-  if (center)
-    fdx <- center.fd(fdx);
 
   phi <- fdx$basis
   G <- inprod(phi, phi)
@@ -34,10 +33,9 @@ ffobi <- function(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
   Lfdobj <- eigenfPar$Lfd
   lambda <- eigenfPar$lambda
   rphi <- eigenfPar$fd$basis
-  if (lambda > 0) {
-    R <- eval.penalty(rphi, Lfdobj)
-    L <- G + lambda * R
-  }; L <- (L + t(L))/2
+  R <- eval.penalty(rphi, Lfdobj)
+  L <- G + lambda * R
+  L <- (L + t(L))/2
   J <- inprod(rphi, phi)
   W <- solve(chol(L))
   rGram <- crossprod(W, J)

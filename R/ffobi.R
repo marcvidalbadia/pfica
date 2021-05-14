@@ -41,7 +41,7 @@ ffobi <- function(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
   W <- solve(chol(L))
   rGram <- crossprod(W, J)
 
-  nr <- numeric()
+  nr <- c()
   for (i in 1:ncol(asta)) nr[i] <- (t(asta[,i]) %*% J %*% asta[,i]);
   ast <- asta %*% diag(nr)
   kurt <- tcrossprod(ast)/nrep

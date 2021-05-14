@@ -5,7 +5,8 @@ ffobi <- function(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
     stop("Argument FD  not a functional data object. See fda package")
   if (length(pr) != 1 & is.character(pr))
     pr <- "fdx.st"
-  else if (!is.character(pr)) stop("Select a functional data object to project")
+  else if (!is.character(pr)) 
+    stop("Select a functional data object to project")
   
   if (center) fdx <- center.fd(fdx)
   a <- fdx$coefs
@@ -24,7 +25,7 @@ ffobi <- function(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
   if (shrinkage == TRUE) covc <- corpcor::cov.shrink(t(a), verbose = F)/nrep
   else covc <- tcrossprod(a)/nrep
 
-  C2 <-  L1 %*% covc %*% t(L1)
+  C2 <-  L1 %*% tcrossprod(covc, L1)
   C2 <- (C2 + t(C2))/2
   dC2 <- La.svd(C2)
   wa <- dC2$u %*% tcrossprod(diag((1/dC2$d)^0.5), dC2$u)

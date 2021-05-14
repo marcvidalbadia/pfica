@@ -6,8 +6,8 @@ ffobi <- function(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
   if (length(pr) != 1 & is.character(pr))
     pr <- "fdx.st"
   else if (!is.character(pr)) stop("Select a functional data object to project")
+  
   if (center) fdx <- center.fd(fdx)
-
   a <- fdx$coefs
   nrep <- ncol(a)
   

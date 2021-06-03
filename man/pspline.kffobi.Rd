@@ -32,7 +32,7 @@ a list with the following named entries:
 \references{
 Aguilera, AM. and MC. Aguilera-Morillo (2013). “Penalized PCA approaches for B-spline expansions of smooth functional data”. In: \emph{Applied Mathematics and Computation} 219(14), pp. 7805–7819.
 
-Vidal, M., M. Rosso  and A. M. Aguilera (2021). Bi-Smoothed Independent Component Analysis of EEG Data. \emph{Submitted}.
+Vidal, M., M. Rosso and AM. Aguilera. (2021). Bi-Smoothed Functional Independent Component Analysis for EEG Artifact Removal. Mathematics 9(11) 1243.
 }
 \author{Marc Vidal, Ana Mª Aguilera}
 \seealso{\code{\link{kffobi}}}

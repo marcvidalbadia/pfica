@@ -2,7 +2,7 @@
 \alias{kffobi}
 \title{Smoothed functional ICA in terms of principal components}
 \description{
- This function computes the ordinary ICA procedure from a penalized principal component expansion (also known as Karhunen-Loeve expansion) whose eigenbasis is expressed in terms of basis functions (Fourier, B-splines...). The estimation method is based on the use of fourth moments (kurtosis), in which it is assumed that the independent components have different kurtosis values. The proposed algorithm can be considered an extension of the functional ICA proposed in Li et al. (2015).}
+ This function computes the ordinary ICA procedure from a penalized principal component expansion (also known as Karhunen-Loeve expansion) whose eigenbasis is expressed in terms of basis functions (Fourier, B-splines...). The estimation method is based on the use of fourth moments (kurtosis), in which it is assumed that the independent components have different kurtosis values. The proposed algorithm can be considered an extension of the functional ICA proposed in Li et al. (2019).}
 \usage{
 kffobi(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
        pr = c("fdx", "fdx.st", "KL", "KL.st"),
@@ -28,11 +28,11 @@ kffobi(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
 \item{ICA.kurtosis}{a numeric vector giving the kurtosis of each component vector.}
 }
 \references{
-Aguilera, AM. and MC. Aguilera-Morillo (2013). “Penalized PCA approaches for B-spline expansions of smooth functional data”. In: \emph{Applied Mathematics and Computation} 219(14), pp. 7805–7819.
+Aguilera, AM. and MC. Aguilera-Morillo (2013). Penalized PCA approaches for B-spline expansions of smooth functional data. \emph{Applied Mathematics and Computation} 219(14), pp. 7805–7819.
 
-Li, B., G. Van Bever, H. Oja, R. Sabolova, and F. Critchley (2015). “Functional independent component analysis: an extension of the fourth-orderblind identification.” \emph{Submitted}.
+Li, B., G. Van Bever, H. Oja, R. Sabolova and F. Critchley (2019). \emph{Functional independent component analysis: an extension of the fourth-orderblind identification}. Technical Report, Univ. Namur.
 
-Miettinen, J., K. Nordhausen, and S. Taskinen (2017). “Blind source separation based on joint diagonalization in R: The packages JADE and BSSasymp”. In: \emph{Journal of Statistical Software} 76.2, pp. 1–31.
+Miettinen, J., K. Nordhausen and S. Taskinen (2017). Blind source separation based on joint diagonalization in R: The packages JADE and BSSasymp. \emph{Journal of Statistical Software} 76(2), pp. 1–31.
 
 }
 \author{Marc Vidal, Ana Mª Aguilera}

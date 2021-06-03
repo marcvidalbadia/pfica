@@ -23,8 +23,7 @@ ffobi(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
 \item{kurtosis}{a numeric vector giving the proportion of variance kurtosis explained by each eigenfunction.}
 \item{scores}{a matrix whose column vectors are the independent components.}}
 \references{
-Peña, C., J. Prieto, and C. Rendón (2014). \emph{Independent components techniques based on kurtosis for functional data analysis}. Working paper 14-10. Universidad Carlos III de Madrid.
-}
+Peña, C., J. Prieto and C. Rendón (2014). \emph{Independent components techniques based on kurtosis for functional data analysis}. Working paper 14–10 Statistics and Econometric Series (06); Universidad Carlos III de Madrid, Madrid, 2014.}
 \author{Marc Vidal, Ana Mª Aguilera}
 \seealso{\code{\link{kffobi}}}
 \examples{

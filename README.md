@@ -14,6 +14,9 @@ Performs penalized (and non-penalized) independent component analysis for univar
   devtools::install_github("m-vidal/pfica")
   ```
   See the [reference
-  manual](https://github.com/m-vidal/pfica/blob/156daedfb9d9d2366610edf9829d48e234c93d8c/pfica_0.1.2.pdf) for more detailed information about the **pfica** functions.
+  manual](https://cran.r-project.org/web/packages/pfica/pfica.pdf) for more detailed information about the **pfica** functions.
+### References
 
+Vidal, M., Rosso, M. and Aguilera, A. M. (2021). Bi-Smoothed Functional Independent Component Analysis for EEG Artifact Removal. Mathematics 9(11) 1243.[ https://doi.org/10.3390/math9111243](https://doi.org/10.3390/math9111243)
+### Installation of the current development version
   **ACKNOWLEDGMENTS. S.N** [Daniel Gost](https://danielgost.com) and PAIDI Research Group FQM-307 ([UGR](https://www.ugr.es)).

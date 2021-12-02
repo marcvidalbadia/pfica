@@ -19,6 +19,8 @@ kffobi <- function(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
   rphi <- eigenfPar$fd$basis
   Lfdobj <- eigenfPar$Lfd
   lambda <- eigenfPar$lambda
+  
+  #SFPCA
   J <- inprod(phi,phi)
   R <- eval.penalty(rphi, Lfdobj)
   Gl <- J + lambda * R
@@ -39,6 +41,8 @@ kffobi <- function(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
   b <-  Qs %*% solve(crossprod(Li,G)) %*% u
   #diag(t(b)%*%J%*%b) #check norms
   beta <- fd(b,phi)
+  
+  #FOBI on z
   z <- inprod(fdx, beta)
   svdz <- La.svd(crossprod(z)/nrep)
   wz <- svdz$u %*% diag(c(1/sqrt(svdz$d)))%*% t(svdz$u)
@@ -52,18 +56,21 @@ kffobi <- function(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
   c <- b %*% v
   #diag(t(c)%*%J%*%c) #check norms
   psi <- fd(c, phi)
-  Ls <- chol(G)
-  V2 <- Ls %*% cov %*% t(Ls);##!
+  
+  #Expansions
+  Ls <- chol(G) ##!
+  V2 <- Ls %*% cov %*% t(Ls) ##! Non-smoothed
   V <- La.svd(V2)
   wa <- V$u %*% diag(c(1/sqrt(V$d))) %*% t(V$u)
   ast <- solve(Ls) %*% wa %*% Ls %*% a
+  
   xst <- fd(ast, phi)
   KL <- fd(b %*% t(z), phi)
   KLst <- fd(b %*% t(zst), phi)
+  
   project <- list(fdx, xst, KL, KLst)
   names(project) <- c("fdx", "fdx.st", "KL", "KL.st")
   zi <- inprod(project[[paste(pr)]], psi)
-
   kurt <- vector()
   for (i in 1:ncomp) kurt[i] <- moments::kurtosis(zi[,i])
 

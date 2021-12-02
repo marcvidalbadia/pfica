@@ -48,7 +48,8 @@ pspline.kffobi <- function(fdx, ncomp = fdx$basis$nbasis, pp = 0, r = 2,
   #diag(t(c)%*%G%*%c) #check norms
   psi <- fd(c, phi)
   Ls <- chol(G)
-  V2 <- Ls %*% cov %*% t(Ls); C2  <- (C2 + t(C2))/2
+  V2 <- Ls %*% cov %*% t(Ls)
+  V2  <- (V2 + t(V2))/2
   V <- La.svd(V2)
   wa <- V$u %*% diag(c(1/sqrt(V$d))) %*% t(V$u)
   ast <- solve(Ls) %*% wa %*% Ls %*% a

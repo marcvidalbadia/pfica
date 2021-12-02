@@ -33,7 +33,8 @@ kffobi <- function(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
     cov <- tcrossprod(a)/nrep }
   G <- inprod(rphi, phi)
   rGram <- crossprod(Li, G)
-  C2 <- rGram %*% cov %*% t(rGram); C2  <- (C2 + t(C2))/2
+  C2 <- rGram %*% cov %*% t(rGram) 
+  C2  <- (C2 + t(C2))/2
   svdc <- La.svd(C2)
   u <- as.matrix(svdc$u[, 1:ncomp])
   Q <- solve(Gl) %*% G
@@ -60,6 +61,7 @@ kffobi <- function(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
   #Expansions
   Ls <- chol(G) ##!
   V2 <- Ls %*% cov %*% t(Ls) ##! Non-smoothed
+  V2  <- (V2 + t(V2))/2
   V <- La.svd(V2)
   wa <- V$u %*% diag(c(1/sqrt(V$d))) %*% t(V$u)
   ast <- solve(Ls) %*% wa %*% Ls %*% a

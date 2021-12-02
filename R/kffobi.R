@@ -53,7 +53,7 @@ kffobi <- function(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
   #diag(t(c)%*%J%*%c) #check norms
   psi <- fd(c, phi)
   Ls <- chol(G)
-  V2 <- Ls %*% cov %*% t(Ls); C2  <- (C2 + t(C2))/2
+  V2 <- Ls %*% cov %*% t(Ls);##!
   V <- La.svd(V2)
   wa <- V$u %*% diag(c(1/sqrt(V$d))) %*% t(V$u)
   ast <- solve(Ls) %*% wa %*% Ls %*% a

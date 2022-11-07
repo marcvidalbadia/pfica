@@ -22,3 +22,8 @@ NEWS (!): We are preparing a new version of pfica, with advanced features and ne
 Vidal, M., Rosso, M. and Aguilera, A. M. (2021). Bi-Smoothed Functional Independent Component Analysis for EEG Artifact Removal. Mathematics 9(11) 1243.[ https://doi.org/10.3390/math9111243](https://doi.org/10.3390/math9111243)
 
   **ACKNOWLEDGMENTS. S.N** [Daniel Gost](https://danielgost.com) and PAIDI Research Group FQM-307 ([UGR](https://www.ugr.es)).
+  
+ ## Issues
+
+For issues, bugs, please use the [Github
+Issues](https://github.com/m-vidal/pfica/issues). 

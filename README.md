@@ -23,7 +23,7 @@ Vidal, M., Rosso, M. and Aguilera, A. M. (2021). Bi-Smoothed Functional Independ
 
   **ACKNOWLEDGMENTS. S.N** [Daniel Gost](https://danielgost.com) and PAIDI Research Group FQM-307 ([UGR](https://www.ugr.es)).
   
- # Issues
+ #### Issues
 
 For issues, bugs, please use the [Github
 Issues](https://github.com/m-vidal/pfica/issues). 

@@ -6,6 +6,8 @@
 
 Performs penalized (and non-penalized) independent component analysis for univariate functional data. Two alternative versions are implemented, both based on the spectral decomposition of the kurtosis operator. Our methods are interfaced with the basis functions provided in the **fda** package.
 
+------
+------
 NEWS (!): We are preparing a new version of pfica, with advanced features and new FICA models.
 
   ### Installation of the current development version

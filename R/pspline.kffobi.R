@@ -50,7 +50,7 @@ pspline.kffobi <- function(fdx, ncomp = fdx$basis$nbasis, pp = 0, r = 2,
   svdz <- La.svd(crossprod(z)/nrep)
   wz <- svdz$u %*% diag(c(1/sqrt(svdz$d)))%*% t(svdz$u)
   zst <- z %*% wz
-  #crossprod(zst)/64
+  #crossprod(zst)/nrep
   nr <- sqrt(rowSums(zst^2))
   z.st <- nr * zst
   C4 <- crossprod(z.st)/(nrep * (ncomp + 2))

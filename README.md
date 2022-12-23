@@ -18,7 +18,7 @@ Performs penalized (and non-penalized) independent component analysis for univar
 ### References
 Vidal, M. and Aguilera, A. M. (2022). Novel whitening approaches in functional settings. Stat. 2022;e516, [<DOI: 10.1002/sta4.516>](https://doi.org/10.1002/sta4.516).
 
-Vidal, M., Rosso, M. and Aguilera, A. M. (2021). Bi-Smoothed Functional Independent Component Analysis for EEG Artifact Removal. Mathematics 9(11) 1243,[<DOI: 10.3390/math9111243>](https://doi.org/10.3390/math9111243).
+Vidal, M., Rosso, M. and Aguilera, A. M. (2021). Bi-Smoothed Functional Independent Component Analysis for EEG Artifact Removal. Mathematics 9(11) 1243, [<DOI: 10.3390/math9111243>](https://doi.org/10.3390/math9111243).
 
   **ACKNOWLEDGMENTS. S.N** [Daniel Gost](https://danielgost.com) and PAIDI Research Group FQM-307 ([UGR](https://www.ugr.es)).
   

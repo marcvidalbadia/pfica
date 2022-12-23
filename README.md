@@ -6,6 +6,9 @@
 
 Performs penalized (and non-penalized) independent component analysis for univariate functional data. Two alternative versions are implemented, both based on the spectral decomposition of the kurtosis operator. Our methods are interfaced with the basis functions provided in the **fda** package.
 
+:exclamation: **ISSUES.** For issues, bugs, please use the [Github
+Issues](https://github.com/m-vidal/pfica/issues). 
+
   ### Installation of the current development version 0.1.3
   The development version of **pfica** can be installed using:
 
@@ -22,5 +25,4 @@ Vidal, M., Rosso, M. and Aguilera, A. M. (2021). Bi-Smoothed Functional Independ
 
   **ACKNOWLEDGMENTS. S.N** [Daniel Gost](https://danielgost.com) and PAIDI Research Group FQM-307 ([UGR](https://www.ugr.es)).
   
-:exclamation: **ISSUES.** For issues, bugs, please use the [Github
-Issues](https://github.com/m-vidal/pfica/issues). 
+

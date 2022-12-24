@@ -35,7 +35,7 @@ Temp <- CanadianWeather$dailyAv[,,1]
 B <- create.bspline.basis(rangeval=c(min(arg),max(arg)), nbasis=16)
 x <- Data2fd(Temp, argvals = arg, B)
 Lfdobj <- int2Lfd(max(0, norder(B)-2))
-penf <- fdPar(B, Lfdobj, lambda=10^4) #lambda
+penf <- fdPar(B, Lfdobj, lambda=10^4) #penalty parameter
 ica.fd <- ffobi(x, 16, penf)
 }
 \keyword{functional ICA}

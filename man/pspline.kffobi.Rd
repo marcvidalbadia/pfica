@@ -1,38 +1,42 @@
 \name{pspline.kffobi}
 \alias{pspline.kffobi}
-\title{P-Spline smoothed functional ICA}
+\title{P-Spline smoothed functional PCA/ICA}
 \description{
-This function provides an alternative form of computing the smoothed functional ICA in terms of principal components (function \code{\link{kffobi}}). A discrete penalty  that measures the roughness of principal factors by summing squared \emph{r}-order differences between adjacent B-spline coefficients (P-spline penalty) is used; see Aguilera and Aguilera-Morillo (2013) for a detailed discussion.}
+This function is an alternative way of computing the smoothed functional ICA in terms of principal components (see \code{\link{kffobi}}). The function further provides smoothed (and non-smoothed) functional PCA estimates. A discrete penalty  that measures the roughness of principal factors by summing squared \emph{r}-order differences between adjacent B-spline coefficients (P-spline penalty) is used; see Aguilera and Aguilera-Morillo (2013) and Eliers and Marx (2021).}
 \usage{
 pspline.kffobi(fdx, ncomp = fdx$basis$nbasis, pp = 0, r = 2,
+               w = c("PCA", "PCA-cor","ZCA", "ZCA-cor","Cholesky"),
                pr = c("fdx", "wfdx", "KL", "wKL"),
-               center = FALSE)}
-%- maybe also 'usage' for other objects documented here.
+               center = TRUE)}
 \arguments{
   \item{fdx}{a functional data object obtained from the \strong{fda} package.}
-  \item{ncomp}{number of independent components to compute.}
-  \item{pp}{the penalty parameter. It can be estimated by \emph{leave-one-out} cross-validation or \emph{baseline} cross-validation (see \code{\link{bcv}}).}
+  \item{ncomp}{number of independent components to compute (must be > 1).}
+  \item{pp}{the penalty parameter. It can be estimated using \emph{leave-one-out} cross-validation.}
   \item{r}{a number indicating the order of the penalty.}
-  \item{pr}{the functional data object to project  into the space spanned by the eigenfunctions of the kurtosis operator.  To compute the independent components, the usual procedure is to use \code{wKL}, the whitened principal component expansion. If \code{pr} is not supplied, then \code{wKL} is used. Note that \code{w} stands for whitened, e.g., \code{wfdx} is the whitened original data.}
+  \item{w}{the whitening procedure. By default \code{ZCA} (Mahalanobis whitening) is used.}
+  \item{pr}{the functional data object to project on to the space spanned by the eigenfunctions of the kurtosis kernel function.  To compute the independent components, the usual procedure is to use \code{wKL}, the whitened principal component expansion. If \code{pr} is not supplied, then \code{wKL} is used. Note that \code{w} stands for whitened, e.g., \code{wfdx} is the whitened original data.}
   \item{center}{a logical value indicating whether the mean function has to be subtracted from each functional observation.}
 }
 %\details{To compute the penalty matrix, the following code is used: \eqn{\Delta^{2}=\mathtt{diff(diag(nknots+2), differences = 2)}}, where \code{nknots} is the  number of basis knots. As in \code{\link{kffobi}}, the functional ICA of the principal component expansion is equivalent to the multivariate ICA of the principal coordinate vectors; see \emph{Details} in \code{\link{kffobi}}.}
 \value{
 a list with the following named entries:
-\item{PCA.eigv}{a numeric vector giving the eigenvalues of the covariance operator.}
-\item{PCA.basis}{a functional data object for the eigenfunctions of the covariance operator.}
+\item{PCA.eigv}{a numeric vector giving the eigenvalues of the covariance kernel function.}
+\item{PCA.basis}{a functional data object for the eigenfunctions of the covariance kernel function.}
 \item{PCA.scores}{a matrix whose column vectors are the principal components.}
-\item{ICA.eigv}{a numeric vector giving the eigenvalues of the kurtosis operator.}
-\item{ICA.basis}{a functional data object for the eigenfunctions of the covariance operator.}
-\item{ICA.scores}{a matrix whose column vectors are the projection coefficients for \code{fdx, fdx.st, KL} or \code{KL.st}.}
+\item{ICA.eigv}{a numeric vector giving the eigenvalues of the kurtosis kernel function.}
+\item{ICA.eigv}{a numeric vector giving the eigenvalues of the kurtosis kernel function.}
+\item{ICA.scores}{a matrix whose column vectors are the projection coefficients for \code{fdx, wfdx, KL} or \code{wKL}.}
+\item{wKL}{the whitened principal components expansion whith coefficients in terms of basis functions.}
 }
 \references{
-Aguilera, AM. and MC. Aguilera-Morillo (2013). Penalized PCA approaches for B-spline expansions of smooth functional data. \emph{Applied Mathematics and Computation} 219(14), pp. 7805–7819.
+Aguilera, A.M. and M.C. Aguilera-Morillo (2013). \emph{Penalized PCA approaches for B-spline expansions of smooth functional data.} Applied Mathematics and Computation 219(14), pp. 7805–7819, <doi:10.1016/j.amc.2013.02.009>.
 
-Vidal, M., M. Rosso and AM. Aguilera. (2021). \emph{Bi-Smoothed Functional Independent Component Analysis for EEG Artifact Removal}. Mathematics 9(11) 1243.
+Eilers, P. and B. Marx (2021). \emph{Practical Smoothing: The Joys of P-splines.} Cambridge: Cambridge University Press, <doi:10.1017/9781108610247>.
+
+Vidal, M., M. Rosso and A.M. Aguilera. (2021). \emph{Bi-Smoothed Functional Independent Component Analysis for EEG Artifact Removal}. Mathematics 9(11) 1243, <doi:10.3390/math9111243>.
 }
 \author{Marc Vidal, Ana Mª Aguilera}
-\seealso{\code{\link{kffobi}}}
+\seealso{\code{\link{kffobi}}, \code{\link{whiten.fd}}}
 \examples{
 ## Canadian Weather data
 library(fda)
@@ -40,10 +44,14 @@ arg <- 1:365
 Temp <- CanadianWeather$dailyAv[,,1]
 B <- create.bspline.basis(rangeval=c(min(arg),max(arg)), nbasis=16)
 x <- Data2fd(Temp, argvals = arg, B)
-ica.fd <- pspline.kffobi(x, 16, pp = 10)
-## Plot by region in order of maximum kurtosis (outliers)
+ica.fd <- pspline.kffobi(x, 2, pp = 10^3, w="ZCA-cor")
+
+## Whitened data using the two first smoothed principal components
+wKL <- ica.fd$wKL
+
+## Plot by region using maximum kurtosis
 sc <- ica.fd$ICA.scores
-plot(sc[,1], sc[,2], ylab = "", xlab = "")
-text(sc[,1], sc[,2], CanadianWeather$region, pch=0.5, cex=0.6)}
+plot(sc[,1], sc[,2], pch = 20, col = factor(CanadianWeather$region),
+     ylab = "IC 2", xlab = "IC 1")}
 \keyword{functional ICA}
 

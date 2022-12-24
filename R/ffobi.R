@@ -1,76 +1,72 @@
-ffobi <- function(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
-                  pr = c("fdx", "fdx.st"),
-                  shrinkage = FALSE, center = FALSE, plotfd = FALSE) {
+ffobi  <- function (fdx,
+                    ncomp = fdx$basis$nbasis,
+                    eigenfPar = fdPar(fdx),
+                    w = c("PCA", "PCA-cor","ZCA", "ZCA-cor",
+                          "Varimax",  "Varimax-cor", "Cholesky"),
+                    pr = c("fdx", "wfdx"),
+                    center = TRUE) {
   if (!(inherits(fdx, "fd")))
     stop("Argument FD  not a functional data object. See fda package")
   if (length(pr) != 1 & is.character(pr))
-    pr <- "fdx.st"
+    pr <- "wfdx"
   else if (!is.character(pr))
     stop("Select a functional data object to project")
-
-  if (center) fdx <- center.fd(fdx)
-  a <- fdx$coefs
-  nrep <- ncol(a)
-
+  if (length(w) != 1 & is.character(w))
+    w <- "ZCA"
+  else if (!is.character(w))
+    stop("Select a whitening method")
+  nrep <- length(fdx$fdnames$reps)
   if (nrep < 2)
     stop("ICA not possible without replications.")
-  else if (!is.character(pr))
-    stop("Select a functional data object to project")
+
+  if (center) fdx <- center.fd(fdx)
 
   phi <- fdx$basis
   G <- inprod(phi, phi)
-  L1 <- chol(G)
-  W1 <- solve(L1)
 
-  if (shrinkage == TRUE) covc <- corpcor::cov.shrink(t(a), verbose = F)/nrep
-  else covc <- tcrossprod(a)/nrep
-
-  C2 <-  L1 %*% tcrossprod(covc, L1)
-  C2 <- (C2 + t(C2))/2
-  dC2 <- La.svd(C2)
-  wa <- dC2$u %*% tcrossprod(diag((1/dC2$d)^0.5), dC2$u)
-  asta <- W1 %*% wa %*% L1 %*% a
+  #source("/Users/marc/Library/Mobile Documents/com~apple~CloudDocs/phd/packages/pfica current/R/whiten.fd.R")
+  wa <- whiten.fd(fdx, w = w)$coefs
+  #cholG <- chol(G)
+  #print(diag(cholG%*%crossprod(t(wa))%*%t(cholG))/nrep) #(!)
 
   Lfdobj <- eigenfPar$Lfd
-  lambda <- eigenfPar$lambda
+  pp <- eigenfPar$lambda
   rphi <- eigenfPar$fd$basis
-  R <- eval.penalty(rphi, Lfdobj)
-  L <- G + lambda * R
-  L <- (L + t(L))/2
+  Gs <- eval.penalty(rphi, 0)
+  if (pp > 0) {
+    P <- eval.penalty(rphi, Lfdobj)
+    Gs <- Gs + pp * P
+  }
+  Gs <- (Gs + t(Gs))/2
   J <- inprod(rphi, phi)
-  W <- solve(chol(L))
-  rGram <- crossprod(W, J)
+  Li <- solve(chol(Gs))
+  LiJ <- crossprod(Li, J)
 
-  nr <- c()
-  for (i in 1:ncol(asta)) nr[i] <- (t(asta[,i]) %*% J %*% asta[,i]);
-  ast <- asta %*% diag(nr)
-  kurt <- tcrossprod(ast)/nrep
-  C4 <- rGram %*% kurt %*% t(rGram)
-  C4  <- (C4 + t(C4))/2
+  nr <- diag(t(wa) %*% G %*% wa)
+  kurt <- wa %*% diag(nr) %*% t(wa)/nrep
+  C4 <- LiJ  %*% kurt %*% t(LiJ)
+  C4 <- C4 + t(C4)/2
 
-  #C4 <- rGram%*%asta%*%t(asta)%*%t(rGram)%*%rGram%*%asta%*%t(asta)%*%t(rGram)
-  #C4  <- (C4 + t(C4))/2
-
-  svdk <- La.svd(C4)
-  u <- as.matrix(svdk$u[, 1:ncomp])
-  eigenk <- svdk$d[1:ncomp]/sum(svdk$d)
-  b <- W %*% u
+  svdk <- eigen(C4, symmetric = TRUE)
+  eigenvalues <- svdk$values
+  u <- as.matrix(svdk$vectors[, 1:ncomp])
+  Q <- solve(Gs) %*% J
+  Qs <- expm::sqrtm(Q)
+  b <-  Qs %*% solve(t(Li) %*% J) %*% u
+  #diag(t(b)%*%J%*%b)
   psi <- fd(b, rphi)
-  xst <- fd(asta, phi)
-  project <- list(fdx, xst)
-  names(project) <- c("fdx", "fdx.st")
-  zi <- inprod(project[[paste(pr)]], psi)
+  #diag(inprod(psi,psi))
 
-  if (plotfd) {
-    oldpar <- par(mfrow=c(1,2), no.readonly = TRUE)
-    on.exit(par(oldpar))
-    for (j in 1:ncomp){
-      plot(psi[j])
-      title(paste('IC', j, "Kurt:", round(eigenk[j],3)))
-      par(ask=T)}; par(ask=F)}
-  colnames(psi$coefs) <- paste("eigenf.", c(1:ncomp), sep = "-")
+  if (pr == "fdx") {
+    zi <- inprod(fdx, psi)
+  } else {
+    zi <- t(wa)%*%G%*%b
+    #diag(t(zi)%*%zi)/nrep
+  }
+
+  colnames(psi$coefs) <- paste("eigenf.", c(1:ncomp), sep = " ")
   rownames(psi$coefs) <- psi$basis$names
-  FICA <- list(psi, eigenk, zi)
-  names(FICA) <- c("eigenbasis", "kurtosis", "scores")
+  FICA <- list(eigenvalues, psi, zi)
+  names(FICA) <- c("ICA.eigv", "ICA.basis", "ICA.scores")
   return(FICA)
 }

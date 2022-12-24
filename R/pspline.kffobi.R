@@ -1,95 +1,89 @@
 pspline.kffobi <- function(fdx, ncomp = fdx$basis$nbasis, pp = 0, r = 2,
+                           w = c("PCA", "PCA-cor", "ZCA",
+                                 "ZCA-cor", "Cholesky"),
                            pr = c("fdx", "wfdx", "KL", "wKL"),
-                           center = FALSE) {
+                           center = TRUE) {
   if (!(inherits(fdx, "fd")))
     stop("Argument FD  not a functional data object; see fda package.")
+  if (ncomp <= 1) ncomp <- 2
+  if (length(w) != 1 & is.character(w))
+    w <- "ZCA"
+  else if (!is.character(w))
+    stop("Select a whitening method.")
   if (length(pr) != 1 & is.character(pr)) {
     pr <- "wKL"
   } else if (!is.character(pr)) {
     stop("Select a functional data object to project.")
   }
-  
-  if (center) fdx <- center.fd(fdx)
-
-  a <- fdx$coefs
-  nrep <- ncol(a)
+  nrep <- length(fdx$fdnames$reps)
   if (nrep < 2)
     stop("ICA not possible without replications.")
 
+  if (center) fdx <- center.fd(fdx)
+
+  a <- fdx$coefs
   phi <- fdx$basis
   cov <- tcrossprod(a)/nrep
   delta <- diff(diag(nrow(a)), differences = r)
-  Pr <- crossprod(delta)
+  P <- crossprod(delta)
   G <- inprod(phi, phi)
-  Gl <- G + (pp*Pr)
+  Gl <- G + pp*P
   L <- chol(Gl)
   Li <- solve(L)
-  rGram <- crossprod(Li,G)
-  C2 <- rGram %*% cov %*% t(rGram)
+  LiG <- crossprod(Li,G)
+  C2 <- LiG %*% cov %*% t(LiG)
   C2  <- (C2 + t(C2))/2
-  svdc <- La.svd(C2)
+  svdc <- La.svd(C2) #(!)
   u <- as.matrix(svdc$u[, 1:ncomp])
 
   Q <- solve(Gl) %*% G
   Qs <- expm::sqrtm(Q)
   b <-  Qs %*% solve(t(Li) %*% G) %*% u
+  beta <- fd(b,phi)
   #print(diag(t(b)%*%G%*%b)) #check norms
+  #print(diag(inprod(beta,beta))) #check orthonormality (!!)
 
-  b3 <-  Li %*% u
-  f3 <- fd(b3,phi);
-  G2 <- inprod(f3,f3)
-  Gram2 <- chol(G2)
-  Li3  <- solve(Gram2)
-  b2 <- b3%*%Li3
-  beta <- fd(b2,phi)
-  #print(inprod(beta,beta)) #check orthonormality
-
-  z <-  t(t(u)%*%rGram%*%a)
+  z <-  t(t(u)%*%LiG%*%a)
   #print(crossprod(z)/nrep) #check uncorrelatedness
 
-  svdz <- La.svd(crossprod(z)/nrep)
-  wz <- svdz$u %*% diag(c(1/sqrt(svdz$d)))%*% t(svdz$u)
-  zst <- z %*% wz
-  #crossprod(zst)/nrep
-  nr <- sqrt(rowSums(zst^2))
-  z.st <- nr * zst
-  C4 <- crossprod(z.st)/(nrep * (ncomp + 2))
+  W <- whitening::whiteningMatrix(crossprod(z)/nrep, method = w)
+  wz <- z %*% W
+  #print(crossprod(wz)/nrep)
+
+  nr <- sqrt(rowSums(wz^2))
+  w.z <- nr * wz
+  C4 <- crossprod(w.z)/(nrep * (ncomp + 2))
   svdk <- La.svd(C4)
-  eigenk  <- svdk$d/sum(svdk$d)
   v <- svdk$u
   c <- b %*% v
   #diag(t(c)%*%G%*%c) #check norms
   psi <- fd(c, phi)
-  #print(inprod(psi,psi)) #check orthonormality
-  Ls <- chol(G)
-  V2 <- Ls %*% cov %*% t(Ls)
-  V2  <- (V2 + t(V2))/2
-  V <- La.svd(V2)
-  wa <- V$u %*% diag(c(1/sqrt(V$d))) %*% t(V$u)
-  ast <- solve(Ls) %*% wa %*% Ls %*% a
-  print(diag(Ls%*%crossprod(t(ast))%*%t(Ls))/nrep)
-  xst <- fd(ast, phi)
 
+  #source("/Users/marc/Library/Mobile Documents/com~apple~CloudDocs/phd/packages/pfica current/R/whiten.fd.R")
+  wfdx <- whiten.fd(fdx, w = w)
   KL <- fd(b %*% t(z), phi)
-  KLst <- fd(b %*% t(zst), phi)
+  wKL <- fd(b %*% t(wz), phi)
   project <- list(fdx, KL)
   names(project) <- c("fdx", "KL")
-
-  if (pr ==  "wKL") {
-    zi <- zst %*% v
+  if (pr == "wKL") {
+    zi <- wz %*% v
   } else if (pr ==  "wfdx") {
-    zi <- t(v%*%t(b)%*%G%*%ast)
+    zi <- t(v%*%t(b)%*%G%*%wfdx$coefs)
   }  else {
     zi <- inprod(project[[paste(pr)]], psi)
   }
   #print(crossprod(zi)/nrep) #check orthonormality
 
-  FICA <- list(svdc$d,beta,z,svdk$d,psi,zi)
+  colnames(psi$coefs) <- paste("eigenf.", c(1:ncomp), sep = " ")
+  rownames(psi$coefs) <- psi$basis$names
+
+  FICA <- list(svdc$d,beta,z,svdk$d,psi,zi,wKL)
   names(FICA) <- c("PCA.eigv",
                    "PCA.basis",
                    "PCA.scores",
                    "ICA.eigv",
                    "ICA.basis",
-                   "ICA.scores")
+                   "ICA.scores",
+                   "wKL")
   return(FICA)
 }

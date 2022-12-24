@@ -44,12 +44,8 @@ kffobi <- function(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
   Q <- solve(Gl) %*% J
   Qs <- expm::sqrtm(Q)
   b <-  Qs %*% solve(crossprod(Li,J)) %*% u
-  #diag(t(b)%*%J%*%b) #check norms
   beta <- fd(b,phi)
-  #diag(inprod(beta,beta)) #check orthonormality
-  #z <- inprod(fdx, beta) #worst results
   z <- t(t(u)%*%LiJ%*%a)
-  #crossprod(z)/nrep #check
 
   W <- whitening::whiteningMatrix(crossprod(z)/nrep, method = w)
   wz <- z %*% W
@@ -64,7 +60,6 @@ kffobi <- function(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
   #diag(t(c)%*%J%*%c) #check norms
   psi <- fd(c, phi)
 
-  #source("/Users/marc/Library/Mobile Documents/com~apple~CloudDocs/phd/packages/pfica current/R/whiten.fd.R")
   wfdx <- whiten.fd(fdx, w = w)
   KL <- fd(b %*% t(z), phi)
   wKL <- fd(b %*% t(wz), phi)
@@ -77,7 +72,6 @@ kffobi <- function(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
   }  else {
     zi <- inprod(project[[paste(pr)]], psi)
   }
-  #print(crossprod(zi)/nrep) #check orthonormality
 
   colnames(psi$coefs) <- paste("eigenf.", c(1:ncomp), sep = " ")
   rownames(psi$coefs) <- psi$basis$names

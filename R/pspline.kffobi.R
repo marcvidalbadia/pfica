@@ -40,15 +40,10 @@ pspline.kffobi <- function(fdx, ncomp = fdx$basis$nbasis, pp = 0, r = 2,
   Qs <- expm::sqrtm(Q)
   b <-  Qs %*% solve(t(Li) %*% G) %*% u
   beta <- fd(b,phi)
-  #print(diag(t(b)%*%G%*%b)) #check norms
-  #print(diag(inprod(beta,beta))) #check orthonormality (!!)
-
   z <-  t(t(u)%*%LiG%*%a)
-  #print(crossprod(z)/nrep) #check uncorrelatedness
 
   W <- whitening::whiteningMatrix(crossprod(z)/nrep, method = w)
   wz <- z %*% W
-  #print(crossprod(wz)/nrep)
 
   nr <- sqrt(rowSums(wz^2))
   w.z <- nr * wz
@@ -56,10 +51,8 @@ pspline.kffobi <- function(fdx, ncomp = fdx$basis$nbasis, pp = 0, r = 2,
   svdk <- La.svd(C4)
   v <- svdk$u
   c <- b %*% v
-  #diag(t(c)%*%G%*%c) #check norms
   psi <- fd(c, phi)
 
-  #source("/Users/marc/Library/Mobile Documents/com~apple~CloudDocs/phd/packages/pfica current/R/whiten.fd.R")
   wfdx <- whiten.fd(fdx, w = w)
   KL <- fd(b %*% t(z), phi)
   wKL <- fd(b %*% t(wz), phi)
@@ -72,7 +65,6 @@ pspline.kffobi <- function(fdx, ncomp = fdx$basis$nbasis, pp = 0, r = 2,
   }  else {
     zi <- inprod(project[[paste(pr)]], psi)
   }
-  #print(crossprod(zi)/nrep) #check orthonormality
 
   colnames(psi$coefs) <- paste("eigenf.", c(1:ncomp), sep = " ")
   rownames(psi$coefs) <- psi$basis$names

@@ -1,10 +1,7 @@
-ffobi  <- function (fdx,
-                    ncomp = fdx$basis$nbasis,
-                    eigenfPar = fdPar(fdx),
+ffobi  <- function (fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
                     w = c("PCA", "PCA-cor","ZCA", "ZCA-cor",
                           "Varimax",  "Varimax-cor", "Cholesky"),
-                    pr = c("fdx", "wfdx"),
-                    center = TRUE) {
+                    pr = c("fdx", "wfdx"), center = TRUE) {
   if (!(inherits(fdx, "fd")))
     stop("Argument FD  not a functional data object. See fda package")
   if (length(pr) != 1 & is.character(pr))
@@ -20,10 +17,9 @@ ffobi  <- function (fdx,
     stop("ICA not possible without replications.")
 
   if (center) fdx <- center.fd(fdx)
-
   phi <- fdx$basis
   G <- inprod(phi, phi)
-  
+
   wa <- whiten.fd(fdx, w = w)$coefs
 
   Lfdobj <- eigenfPar$Lfd
@@ -64,3 +60,4 @@ ffobi  <- function (fdx,
   names(FICA) <- c("ICA.eigv", "ICA.basis", "ICA.scores")
   return(FICA)
 }
+

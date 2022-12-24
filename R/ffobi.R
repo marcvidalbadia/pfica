@@ -23,11 +23,8 @@ ffobi  <- function (fdx,
 
   phi <- fdx$basis
   G <- inprod(phi, phi)
-
-  #source("/Users/marc/Library/Mobile Documents/com~apple~CloudDocs/phd/packages/pfica current/R/whiten.fd.R")
+  
   wa <- whiten.fd(fdx, w = w)$coefs
-  #cholG <- chol(G)
-  #print(diag(cholG%*%crossprod(t(wa))%*%t(cholG))/nrep) #(!)
 
   Lfdobj <- eigenfPar$Lfd
   pp <- eigenfPar$lambda
@@ -53,15 +50,12 @@ ffobi  <- function (fdx,
   Q <- solve(Gs) %*% J
   Qs <- expm::sqrtm(Q)
   b <-  Qs %*% solve(t(Li) %*% J) %*% u
-  #diag(t(b)%*%J%*%b)
   psi <- fd(b, rphi)
-  #diag(inprod(psi,psi))
 
   if (pr == "fdx") {
     zi <- inprod(fdx, psi)
   } else {
     zi <- t(wa)%*%G%*%b
-    #diag(t(zi)%*%zi)/nrep
   }
 
   colnames(psi$coefs) <- paste("eigenf.", c(1:ncomp), sep = " ")

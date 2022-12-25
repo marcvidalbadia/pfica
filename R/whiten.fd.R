@@ -81,7 +81,6 @@ whiten.fd  <- function (fdx,
 }
 
   wa <- iGChol %*% W %*% GChol %*% a
-  #print(diag(GChol%*%crossprod(t(wa))%*%t(GChol))/nrep)
 
   wfdx <- fd(wa,phi)
   if (post.center) wfdx <- center.fd(wfdx);

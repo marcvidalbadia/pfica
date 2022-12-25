@@ -1,15 +1,32 @@
 Package: pfica
-Version: 0.1.2
-Title: Independent Component Analysis for Univariate Functional Data
-Author: Marc Vidal, Ana Mª Aguilera
+Version: 0.1.3
+Title: Independent Components Analysis Techniques for Functional Data
+Authors@R: 
+  c(person(given = "Marc",
+           family = "Vidal",
+           role = c("aut", "cre"),
+           email = "marc.vidalbadia@ugent.be",
+           comment = c(ORCID = "0000-0002-1084-3242")),
+    person(given = c("Ana", "Mª"),
+           family = "Aguilera",
+           role = c("aut","ths"),
+           comment = c(ORCID = "0000-0003-2425-6716")))
+Author: Marc Vidal [aut, cre], Ana Mª Aguilera [aut, ths]
 Maintainer: Marc Vidal <marc.vidalbadia@ugent.be>
-Description: Performs penalized independent component analysis for univariate functional data [<doi:10.3390/math9111243>].
+Description: This package includes a set of tools to perform smoothed (and non-smoothed) 
+  principal/independent components analysis of functional data. Various functional 
+  pre-whitening approaches are implemented as discussed in Vidal and Aguilera (2022) 
+  “Novel whitening approaches in functional settings", <doi:10.1002/sta4.516>. Further whitening 
+  representations of functional data can be derived in terms of a few principal components, 
+  providing a powerful avenue to explore hidden structures in low dimensional settings: 
+  see Vidal, Rosso and Aguilera (2021) “Bi-smoothed functional independent 
+  component analysis for EEG artifact removal”, <doi:10.3390/math9111243>.  
 License: GPL (>= 2)
 Depends: 
     R (>= 2.10), fda
-Imports: corpcor, expm, moments
+Imports: expm, whitening
 URL: https://github.com/m-vidal/pfica
 Encoding: UTF-8
 NeedsCompilation: no
 Repository: CRAN
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.0

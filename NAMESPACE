@@ -1,4 +1,4 @@
 exportPattern("^[[:alpha:]]+")
 importFrom("graphics", "lines", "par", "plot", "title")
-importFrom("stats", "median", "sd", "cov2cor")
-import(fda)
+importFrom("stats", "median", "sd")
+import(fda, moments)

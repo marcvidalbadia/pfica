@@ -9,7 +9,7 @@ Performs penalized (and non-penalized) independent component analysis for univar
 :exclamation: For issues, bugs, please use the [Github
 Issues](https://github.com/m-vidal/pfica/issues). 
 
-  ### Installation of the current development version (v0.1.3)
+  ### 📦 Installation of the current development version (v0.1.3)
   The development version of **pfica** can be installed using:
 
   ``` r

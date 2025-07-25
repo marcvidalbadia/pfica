@@ -20,7 +20,7 @@ ffobi  <- function (fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
 
   phi <- fdx$basis
   G <- inprod(phi, phi)
-  wa <- whiten.fd(fdx, w = w)$coefs
+  wa <- pfica:::whiten.fd(fdx, w = w)$coefs
 
   Lfdobj <- eigenfPar$Lfd
   pp <- eigenfPar$lambda
@@ -34,18 +34,20 @@ ffobi  <- function (fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
   J <- inprod(rphi, phi)
   Li <- solve(chol(Gs))
   LiJ <- crossprod(Li, J) #(!)
-
-  nr <- diag(t(wa) %*% G %*% wa)
+  G2 <- t(LiJ)%*%LiJ
+  
+  nr <- diag(t(wa) %*% G2 %*% wa)
   kurt <- wa %*% diag(nr) %*% t(wa)/nrep
   C4 <- LiJ  %*% kurt %*% t(LiJ)
-  C4 <- C4 + t(C4)/2
+  C4 <- (C4 + t(C4))/2
 
   svdk <- eigen(C4, symmetric = TRUE)
   kappa <- svdk$values
   u <- as.matrix(svdk$vectors[, 1:ncomp])
-  Q <- solve(Gs) %*% J
-  Qs <- expm::sqrtm(Q)
-  b <-  Qs %*% solve(t(Li) %*% J) %*% u
+  #Q <- solve(Gs) %*% J #score orthonormalization
+  #Qs <- expm::sqrtm(Q)
+  #b <-  Qs %*% solve(t(Li) %*% J) %*% u
+  b <-  Li %*% u
   psi <- fd(b, rphi)
 
   if (pr == "fdx") {

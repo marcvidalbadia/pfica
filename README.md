@@ -11,7 +11,7 @@ Performs penalized (and non-penalized) independent component analysis for univar
 
   ``` r
   # install.packages("devtools")
-  devtools::install_github("m-vidal/pfica")
+  devtools::install_github("marcvidalbadia/pfica")
   ```
   See the [reference
   manual](https://cran.r-project.org/web/packages/pfica/pfica.pdf) for more detailed information about the **pfica** functions.

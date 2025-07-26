@@ -17,9 +17,4 @@ Performs penalized (and non-penalized) independent component analysis for univar
   manual](https://cran.r-project.org/web/packages/pfica/pfica.pdf) for more detailed information about the **pfica** functions.
 ### Updates
 v0.1.3 beta 25.12.2022
-### References
-Vidal, M. and Aguilera, A. M. (2022). Novel whitening approaches in functional settings. Stat. 2022;e516, [<DOI: 10.1002/sta4.516>](https://doi.org/10.1002/sta4.516).
-
-Vidal, M., Rosso, M. and Aguilera, A. M. (2021). Bi-Smoothed Functional Independent Component Analysis for EEG Artifact Removal. Mathematics 9(11) 1243, [<DOI: 10.3390/math9111243>](https://doi.org/10.3390/math9111243).
-  
-
+............26.07.2025

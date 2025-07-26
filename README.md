@@ -17,4 +17,5 @@ Performs penalized (and non-penalized) independent component analysis for univar
   manual](https://cran.r-project.org/web/packages/pfica/pfica.pdf) for more detailed information about the **pfica** functions.
 ### Updates
 v0.1.3 beta 25.12.2022
+
 ............26.07.2025

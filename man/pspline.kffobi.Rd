@@ -17,14 +17,13 @@ pspline.kffobi(fdx, ncomp = fdx$basis$nbasis, pp = 0, r = 2,
   \item{pr}{the functional data object to project on to the space spanned by the eigenfunctions of the kurtosis kernel function.  To compute the independent components, the usual procedure is to use \code{wKL}, the whitened principal component expansion. If \code{pr} is not supplied, then \code{wKL} is used. Note that \code{w} stands for whitened, e.g., \code{wfdx} is the whitened original data.}
   \item{center}{a logical value indicating whether the mean function has to be subtracted from each functional observation.}
 }
-%\details{To compute the penalty matrix, the following code is used: \eqn{\Delta^{2}=\mathtt{diff(diag(nknots+2), differences = 2)}}, where \code{nknots} is the  number of basis knots. As in \code{\link{kffobi}}, the functional ICA of the principal component expansion is equivalent to the multivariate ICA of the principal coordinate vectors; see \emph{Details} in \code{\link{kffobi}}.}
 \value{
 a list with the following named entries:
 \item{PCA.eigv}{a numeric vector giving the eigenvalues of the covariance kernel function.}
 \item{PCA.basis}{a functional data object for the eigenfunctions of the covariance kernel function.}
 \item{PCA.scores}{a matrix whose column vectors are the principal components.}
 \item{ICA.eigv}{a numeric vector giving the eigenvalues of the kurtosis kernel function.}
-\item{ICA.eigv}{a numeric vector giving the eigenvalues of the kurtosis kernel function.}
+\item{ICA.basis}{a functional data object for the kurtosis kernel eigenfunctions.}
 \item{ICA.scores}{a matrix whose column vectors are the projection coefficients for \code{fdx, wfdx, KL} or \code{wKL}.}
 \item{wKL}{the whitened principal components expansion whith coefficients in terms of basis functions.}
 }

@@ -23,7 +23,7 @@ kffobi(fdx, ncomp = fdx$basis$nbasis, eigenfPar = fdPar(fdx),
 \item{PCA.basis}{a functional data object for the eigenfunctions of the covariance kernel function.}
 \item{PCA.scores}{a matrix whose column vectors are the principal components.}
 \item{ICA.eigv}{a numeric vector giving the eigenvalues of the kurtosis kernel function.}
-\item{ICA.eigv}{a numeric vector giving the eigenvalues of the kurtosis kernel function.}
+\item{ICA.basis}{a functional data object for the kurtosis kernel eigenfunctions.}
 \item{ICA.scores}{a matrix whose column vectors are the projection coefficients for \code{fdx, wfdx, KL} or \code{wKL}.}
 \item{wKL}{the whitened principal components expansion whith coefficients in terms of basis functions.}
 }

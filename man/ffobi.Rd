@@ -40,7 +40,7 @@ Lfdobj <- int2Lfd(max(0, norder(B)-2))
 penf <- fdPar(B, Lfdobj, lambda=4200) #penalty parameter (lambda)
 ica.fd <- ffobi(x,  eigenfPar = penf, w = "Cholesky")
 
-## Plot by  minimmum smoothed kurtosis
+## Plot by minimmum smoothed kurtosis
 sc <- ica.fd$ICA.scores
 plot(sc[,q], sc[,(q-1)], pch = 20, col = factor(c(rep("East",15),rep("West",20))),
      ylab = "IC q-1", xlab = "IC q")
